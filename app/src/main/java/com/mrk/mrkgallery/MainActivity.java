@@ -187,24 +187,30 @@ public class MainActivity extends AppCompatActivity implements MMListener {
 
         ivImage = (ImageView) findViewById(R.id.image);
         tvLabel = (TextView) findViewById(R.id.label);
-
+        btnSelect = (Button) findViewById(R.id.btnSelect);
         btnTake = (Button) findViewById(R.id.btnTake);
+
+        // 拍照
         btnTake.setOnClickListener(new Button.OnClickListener() {
+
             public void onClick(View v) {
                 initDetect();
-                //Log.d(LOG_TAG, "get uri");
+
                 fileUri = getOutputMediaFileUri();
                 Log.d(LOG_TAG, "end get uri = " + fileUri);
+
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                 startActivityForResult(i, REQUEST_IMAGE_TAKE);
             }
         });
 
-        btnSelect = (Button) findViewById(R.id.btnSelect);
+        // 选择图片
         btnSelect.setOnClickListener(new Button.OnClickListener() {
+
             public void onClick(View v) {
                 initDetect();
+
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, REQUEST_IMAGE_SELECT);
             }

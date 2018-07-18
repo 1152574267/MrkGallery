@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:minHeight="200dp"
-        android:minWidth="200dp"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
