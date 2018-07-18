@@ -25,6 +25,7 @@ import com.huawei.hiai.vision.common.ConnectionCallback;                //加载
 import com.huawei.hiai.vision.common.VisionBase;                        //加载连接服务的静态类
 import com.huawei.hiai.vision.visionkit.image.detector.Label;
 import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
+import com.mrk.mrkgallery.listener.MMListener;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -37,14 +38,9 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements MMListener {
     private static final String LOG_TAG = "label_detect";
-    private Button btnTake;
-    private Button btnSelect;
-    private ImageView ivImage;
-    private TextView tvLabel;
 
     private static final int REQUEST_IMAGE_TAKE = 100;
     private static final int REQUEST_IMAGE_SELECT = 200;
-
     private static final String[] LABEL_CATEGORYS = {
             "People",
             "Food",
@@ -64,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements MMListener {
             "Toy"
     };
 
-    private static final HashMapLABEL_CONTENTS =new HashMap<>();
+    private static final HashMap<Integer, String> LABEL_CONTENTS = new HashMap<Integer, String>();
 
     static {
         LABEL_CONTENTS.put(0, "people");
@@ -175,9 +171,13 @@ public class MainActivity extends AppCompatActivity implements MMListener {
         LABEL_CONTENTS.put(125, "guitar");
     }
 
+    private Button btnTake;
+    private Button btnSelect;
+    private ImageView ivImage;
+    private TextView tvLabel;
+    private ProgressDialog dialog;
     private Uri fileUri;
     private Bitmap bmp;
-    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
