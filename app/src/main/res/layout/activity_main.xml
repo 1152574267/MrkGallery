@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.mrk.mrkgallery.MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/sample_text"
+    <ImageView
+        android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:minHeight="200dp"
+        android:minWidth="200dp"
+        android:src="@mipmap/ic_launcher" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/app_name"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/btnSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label"
+        android:layout_marginTop="100dp"
+        android:text="select an image"
+        android:textSize="14dp" />
+
+    <Button
+        android:id="@+id/btnTake"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSelect"
+        android:layout_marginTop="5dp"
+        android:text="take a image"
+        android:textSize="14dp" />
+</RelativeLayout>

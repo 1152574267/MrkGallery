@@ -26,6 +26,7 @@ import com.huawei.hiai.vision.common.VisionBase;                        //加载
 import com.huawei.hiai.vision.visionkit.image.detector.Label;
 import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
 import com.mrk.mrkgallery.listener.MMListener;
+import com.mrk.mrkgallery.task.LabelDetectTask;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -285,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements MMListener {
             }
             strLabel += ", probability: " + String.valueOf(label.getCategoryProbability()) + "\n";
 
-            ListlabelContents = label.getLabelContent();
+            List<LabelContent> labelContents = label.getLabelContent();
             for (LabelContent labelContent : labelContents) {
                 strLabel += "labelContent: ";
                 int labelContentID = labelContent.getLabelId();
