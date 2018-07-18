@@ -240,8 +240,6 @@ public class MainActivity extends AppCompatActivity implements MMListener {
                 Log.i(LOG_TAG, "onServiceDisconnect");
             }
         });
-
-        requestPermissions();
     }
 
     @Override
@@ -353,23 +351,4 @@ public class MainActivity extends AppCompatActivity implements MMListener {
         return mediaFile;
     }
 
-    private void requestPermissions() {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                int permission = ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 0x0010);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
 }
