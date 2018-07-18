@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements MMListener {
     private ProgressDialog dialog;
     private Uri fileUri;
     private Bitmap bmp;
+    private File mediaFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -252,7 +253,8 @@ public class MainActivity extends AppCompatActivity implements MMListener {
             String imgPath;
 
             if (requestCode == REQUEST_IMAGE_TAKE) {
-                imgPath = Environment.getExternalStorageDirectory() + fileUri.getPath();
+                //imgPath = Environment.getExternalStorageDirectory() + fileUri.getPath();
+                imgPath = mediaFile.getAbsolutePath();
             } else {
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -325,17 +327,17 @@ public class MainActivity extends AppCompatActivity implements MMListener {
     /**
      * Create a file Uri for saving an image or video
      */
-    private Uri getOutputMediaFileUri() {
-        Log.d(LOG_TAG, "authority = " + getPackageName() + ".provider");
-        Log.d(LOG_TAG, "getApplicationContext = " + getApplicationContext());
-
-        return FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", getOutputMediaFile());
-    }
+//    private Uri getOutputMediaFileUri() {
+//        Log.d(LOG_TAG, "authority = " + getPackageName() + ".provider");
+//        Log.d(LOG_TAG, "getApplicationContext = " + getApplicationContext());
+//
+//        return FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", getOutputMediaFile());
+//    }
 
     /**
      * Create a File for saving an image
      */
-    private static File getOutputMediaFile() {
+    private File getOutputMediaFile() {
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "LabelDetect");
 
         // Create the storage directory if it does not exist
@@ -348,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements MMListener {
 
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
                 "IMG_" + timeStamp + ".jpg");
         Log.d(LOG_TAG, "mediaFile " + mediaFile);
 
