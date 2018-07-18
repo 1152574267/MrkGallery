@@ -1,18 +1,13 @@
 package com.mrk.mrkgallery;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -196,8 +191,8 @@ public class MainActivity extends AppCompatActivity implements MMListener {
             public void onClick(View v) {
                 initDetect();
 
-                fileUri = getOutputMediaFileUri();
-                Log.d(LOG_TAG, "end get uri = " + fileUri);
+                Uri imageUri = Uri.fromFile(getOutputMediaFile());
+                Log.d(LOG_TAG, imageUri.toString());
 
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
@@ -318,16 +313,6 @@ public class MainActivity extends AppCompatActivity implements MMListener {
         btnTake.setEnabled(false);
         btnSelect.setEnabled(false);
         tvLabel.setText("");
-    }
-
-    /**
-     * Create a file Uri for saving an image or video
-     */
-    private Uri getOutputMediaFileUri() {
-        Log.d(LOG_TAG, "authority = " + getPackageName() + ".provider");
-        Log.d(LOG_TAG, "getApplicationContext = " + getApplicationContext());
-
-        return FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", getOutputMediaFile());
     }
 
     /**
