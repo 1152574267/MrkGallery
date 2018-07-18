@@ -191,8 +191,8 @@ public class MainActivity extends AppCompatActivity implements MMListener {
             public void onClick(View v) {
                 initDetect();
 
-                Uri imageUri = Uri.fromFile(getOutputMediaFile());
-                Log.d(LOG_TAG, imageUri.toString());
+                fileUri = Uri.fromFile(getOutputMediaFile());
+                Log.d(LOG_TAG, fileUri.toString());
 
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
