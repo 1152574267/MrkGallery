@@ -68,6 +68,7 @@ public class PhotoFragment extends Fragment implements
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
 
+        DbHelper.initLabelContents();
         Log.i(TAG, "init LabelDetector");
         // 定义detector实例，将此工程的Context当做入参
         labelDetector = new LabelDetector(mContext);
@@ -145,8 +146,6 @@ public class PhotoFragment extends Fragment implements
     }
 
     public void startAsyncTask() {
-        DbHelper.initLabelContents();
-
         Flowable.create(new FlowableOnSubscribe<PhotoItem>() {
 
             @Override
