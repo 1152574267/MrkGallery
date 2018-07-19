@@ -30,6 +30,7 @@ import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -158,6 +159,7 @@ public class PhotoFragment extends Fragment implements
                 }
             }
         }, BackpressureStrategy.BUFFER)
+                .delay(1, TimeUnit.SECONDS)
                 .map(new Function<PhotoItem, PhotoItem>() {
 
                     @Override
@@ -170,7 +172,7 @@ public class PhotoFragment extends Fragment implements
                         Log.i(TAG, String.format("labeldetect whole time: %d ms", endTime - startTime));
 
                         // release engine after detect finished
-                        labelDetector.release();
+                        // labelDetector.release();
 
                         if (result_label == null) {
                             photoItem.setPhotoName("not get label");
@@ -207,7 +209,9 @@ public class PhotoFragment extends Fragment implements
                     @Override
                     public void accept(PhotoItem photoItem) throws Exception {
                         mAdapter.addItem(photoItem);
-                        mPhotoView.scrollToPosition(0);
+                        //mPhotoView.scrollToPosition(0);
+
+                        labelDetector.release();
                     }
                 });
     }
@@ -231,6 +235,7 @@ public class PhotoFragment extends Fragment implements
          * 非null: 即回调函数接口对象，表示异步处理，用于异步返回结果, 目前暂不支持异步处理
          * */
         JSONObject jsonObject = labelDetector.detect(frame, null);
+        Log.d(TAG, "labelDetector detect: "+(jsonObject == null));
         /**
          * 通过convertResult将json字符串转为java类的形式（您也可以自己解析json字符串）
          *
