@@ -1,43 +1,19 @@
 package com.mrk.mrkgallery;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.huawei.hiai.vision.common.ConnectionCallback;                //加载连接服务的回调函数
 import com.huawei.hiai.vision.common.VisionBase;                        //加载连接服务的静态类
-import com.huawei.hiai.vision.visionkit.image.detector.Label;
-import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
 import com.mrk.mrkgallery.adapter.XFragmentPagerAdapter;
-import com.mrk.mrkgallery.listener.MMListener;
 import com.mrk.mrkgallery.model.FragmentGenerator;
-import com.mrk.mrkgallery.task.LabelDetectTask;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements MMListener, TabLayout.OnTabSelectedListener {
+public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private static final String TAG = "MainActivity";
 
 //    private static final int REQUEST_IMAGE_TAKE = 100;

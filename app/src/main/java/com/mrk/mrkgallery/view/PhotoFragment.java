@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.huawei.hiai.vision.image.detector.LabelDetector;
 import com.huawei.hiai.vision.visionkit.common.Frame;
 import com.huawei.hiai.vision.visionkit.image.detector.Label;
-import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;
+import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
