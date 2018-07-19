@@ -15,7 +15,7 @@ public class DbHelper {
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
         photoList.clear();
 
-        final String[] imageColumns = MediaDataGenerator.ImageDataGenerator.ImageColumns;
+        final String[] imageColumns = MediaDataGenerator.ImageDataGenerator.imageColumns;
         Cursor cursor = context.getContentResolver().query
                 (MediaDataGenerator.imageUri,
                         imageColumns,
