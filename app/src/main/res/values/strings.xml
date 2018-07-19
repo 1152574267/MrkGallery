@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MrkGallery</string>
+    <string name="tv_image_label_detect">图像标签检测</string>
+    <string name="tv_123">123</string>
 </resources>
