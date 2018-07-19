@@ -22,10 +22,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.huawei.hiai.vision.common.ConnectionCallback;                //加载连接服务的回调函数
-import com.huawei.hiai.vision.common.VisionBase;                        //加载连接服务的静态类
-import com.huawei.hiai.vision.visionkit.image.detector.Label;
-import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
+//import com.huawei.hiai.vision.common.ConnectionCallback;                //加载连接服务的回调函数
+//import com.huawei.hiai.vision.common.VisionBase;                        //加载连接服务的静态类
+//import com.huawei.hiai.vision.visionkit.image.detector.Label;
+//import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
 import com.mrk.mrkgallery.adapter.XFragmentPagerAdapter;
 import com.mrk.mrkgallery.listener.MMListener;
 import com.mrk.mrkgallery.model.FragmentGenerator;
@@ -230,28 +230,28 @@ public class MainActivity extends AppCompatActivity implements MMListener, TabLa
 
         // 应用VisionBase静态类进行初始化，异步拿到服务的连接
         // To connect HiAi Engine service using VisionBase
-        VisionBase.init(MainActivity.this, new ConnectionCallback() {
-
-            /**
-             * 可以在这里进行detector类的初始化、标记服务连接状态等
-             * */
-            @Override
-            public void onServiceConnect() {
-                //This callback method is called when the connection to the service is successful.
-                //Here you can initialize the detector class, mark the service connection status, and more.
-                Log.i(LOG_TAG, "onServiceConnect ");
-            }
-
-            /**
-             * 可以选择在这里进行服务的重连，或者对异常进行处理
-             * */
-            @Override
-            public void onServiceDisconnect() {
-                //This callback method is called when disconnected from the service.
-                //You can choose to reconnect here or to handle exceptions.
-                Log.i(LOG_TAG, "onServiceDisconnect");
-            }
-        });
+//        VisionBase.init(MainActivity.this, new ConnectionCallback() {
+//
+//            /**
+//             * 可以在这里进行detector类的初始化、标记服务连接状态等
+//             * */
+//            @Override
+//            public void onServiceConnect() {
+//                //This callback method is called when the connection to the service is successful.
+//                //Here you can initialize the detector class, mark the service connection status, and more.
+//                Log.i(LOG_TAG, "onServiceConnect ");
+//            }
+//
+//            /**
+//             * 可以选择在这里进行服务的重连，或者对异常进行处理
+//             * */
+//            @Override
+//            public void onServiceDisconnect() {
+//                //This callback method is called when disconnected from the service.
+//                //You can choose to reconnect here or to handle exceptions.
+//                Log.i(LOG_TAG, "onServiceDisconnect");
+//            }
+//        });
     }
 
     private void initView() {
@@ -307,8 +307,8 @@ public class MainActivity extends AppCompatActivity implements MMListener, TabLa
 //        }
 //    }
 
-    @Override
-    public void onTaskCompleted(Label label) {
+//    @Override
+//    public void onTaskCompleted(Label label) {
 //        ivImage.setImageBitmap(bmp);
 //
 //        if (label == null) {
@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements MMListener, TabLa
 //        if (dialog != null) {
 //            dialog.dismiss();
 //        }
-    }
+//    }
 
 //    private void initDetect() {
 //        btnTake.setEnabled(false);
