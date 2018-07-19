@@ -7,7 +7,7 @@ public class MediaDataGenerator {
     public static final Uri imageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
 
     public static class ImageDataGenerator {
-        public static final String[] ImageColumns = {
+        public static final String[] imageColumns = {
                 MediaStore.Images.Media._ID,
                 MediaStore.Images.Media.DISPLAY_NAME,
                 MediaStore.Images.Media.TITLE,
