@@ -18,9 +18,6 @@ import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
 import com.mrk.mrkgallery.util.DbHelper;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +27,7 @@ import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class PhotoFragment extends Fragment implements
@@ -134,6 +132,7 @@ public class PhotoFragment extends Fragment implements
             @Override
             public void subscribe(@NonNull FlowableEmitter<PhotoItem> emitter) throws Exception {
                 List<PhotoItem> photoItems = DbHelper.getPhotoList(mContext);
+                Log.d(TAG, "subscribe: " + photoItems.size());
 
                 for (int i = 0; i < photoItems.size(); i++) {
                     emitter.onNext(photoItems.get(i));
@@ -142,29 +141,12 @@ public class PhotoFragment extends Fragment implements
         }, BackpressureStrategy.BUFFER)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PhotoItem>() {
+                .subscribe(new Consumer<PhotoItem>() {
 
                     @Override
-                    public void onSubscribe(Subscription s) {
-                        Log.d(TAG, "onSubscribe");
-                    }
-
-                    @Override
-                    public void onNext(PhotoItem photoItem) {
-                        Log.d(TAG, "onNext");
-
+                    public void accept(PhotoItem photoItem) throws Exception {
                         mAdapter.addItem(photoItem);
                         photoList.scrollToPosition(0);
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.d(TAG, "onError: " + t.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "onComplete");
                     }
                 });
     }
