@@ -35,7 +35,7 @@ public class PhotoFragment extends Fragment implements
     private static final String TAG = PhotoFragment.class.getSimpleName();
 
     private Context mContext;
-    private RecyclerView photoList;
+    private RecyclerView mPhotoView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
 
     @Override
@@ -50,8 +50,8 @@ public class PhotoFragment extends Fragment implements
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        List<PhotoItem> mPhotoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(mContext, mPhotoList);
+        List<PhotoItem> photoList = new ArrayList<PhotoItem>();
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(mContext, photoList);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
     }
@@ -71,14 +71,14 @@ public class PhotoFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated");
 
-        photoList = (RecyclerView) view.findViewById(R.id.tablist);
+        mPhotoView = (RecyclerView) view.findViewById(R.id.tablist);
 //        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
-        photoList.setHasFixedSize(true);
-        photoList.setLayoutManager(layoutManager);
-        photoList.addItemDecoration(new MyDecoration(mContext, MyDecoration.HORIZONTAL_LIST));
-        photoList.setAdapter(mAdapter);
+        mPhotoView.setHasFixedSize(true);
+        mPhotoView.setLayoutManager(layoutManager);
+        mPhotoView.addItemDecoration(new MyDecoration(mContext, MyDecoration.HORIZONTAL_LIST));
+        mPhotoView.setAdapter(mAdapter);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class PhotoFragment extends Fragment implements
                     @Override
                     public void accept(PhotoItem photoItem) throws Exception {
                         mAdapter.addItem(photoItem);
-                        photoList.scrollToPosition(0);
+                        mPhotoView.scrollToPosition(0);
                     }
                 });
     }
