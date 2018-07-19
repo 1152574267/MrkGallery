@@ -51,7 +51,6 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
             params.height = (int) (200 + Math.random() * 400);
             holder.img.setLayoutParams(params);
             Glide.with(mContext).load(item.getPhotoPath()).into(holder.img);
-//            holder.img.setImageBitmap(DbHelper.getVideoThumb(item.getVideoPath()));
         }
 
         final int index = position;
