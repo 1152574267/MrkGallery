@@ -98,7 +98,7 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
     public void addItem(T itemData) {
         mDataList.add(itemData);
 
-        notifyItemInserted(0);
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
