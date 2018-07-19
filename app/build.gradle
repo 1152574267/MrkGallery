@@ -46,5 +46,7 @@ dependencies {
     compile(name: 'huawei-hiai-vision-8.1.0.303', ext: 'aar')
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.github.bumptech.glide:glide:4.0.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.15'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
 }

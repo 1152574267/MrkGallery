@@ -16,9 +16,21 @@ import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
+import com.mrk.mrkgallery.util.DbHelper;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
 
 public class PhotoFragment extends Fragment implements
         MRecyclerViewAdapter.OnItemClickListener, MRecyclerViewAdapter.OnItemLongClickListener {
@@ -117,7 +129,44 @@ public class PhotoFragment extends Fragment implements
     }
 
     public void startAsyncTask() {
+        Flowable.create(new FlowableOnSubscribe<PhotoItem>() {
 
+            @Override
+            public void subscribe(@NonNull FlowableEmitter<PhotoItem> emitter) throws Exception {
+                List<PhotoItem> photoItems = DbHelper.getPhotoList(mContext);
+
+                for (int i = 0; i < photoItems.size(); i++) {
+                    emitter.onNext(photoItems.get(i));
+                }
+            }
+        }, BackpressureStrategy.BUFFER)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<PhotoItem>() {
+
+                    @Override
+                    public void onSubscribe(Subscription s) {
+                        Log.d(TAG, "onSubscribe");
+                    }
+
+                    @Override
+                    public void onNext(PhotoItem photoItem) {
+                        Log.d(TAG, "onNext");
+
+                        mAdapter.addItem(photoItem);
+                        photoList.scrollToPosition(0);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.d(TAG, "onError: " + t.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete");
+                    }
+                });
     }
 
 }

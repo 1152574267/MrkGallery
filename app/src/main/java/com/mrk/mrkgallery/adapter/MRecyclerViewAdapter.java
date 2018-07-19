@@ -86,13 +86,19 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
         return mDataList == null ? null : mDataList.get(position);
     }
 
-    public void addItem(List<T> dataList) {
+    public void addAll(List<T> dataList) {
         mDataList.clear();
         for (int i = 0; i < dataList.size(); i++) {
             mDataList.add(dataList.get(i));
         }
 
         notifyDataSetChanged();
+    }
+
+    public void addItem(T itemData) {
+        mDataList.add(itemData);
+
+        notifyItemInserted(0);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

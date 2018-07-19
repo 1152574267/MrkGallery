@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DbHelper {
 
-    public List<PhotoItem> getPhotoList(Context context) {
+    public static List<PhotoItem> getPhotoList(Context context) {
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
         photoList.clear();
 
