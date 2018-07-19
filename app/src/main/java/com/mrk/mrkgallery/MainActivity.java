@@ -9,7 +9,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.FileProvider;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +26,9 @@ import com.huawei.hiai.vision.common.ConnectionCallback;                //加载
 import com.huawei.hiai.vision.common.VisionBase;                        //加载连接服务的静态类
 import com.huawei.hiai.vision.visionkit.image.detector.Label;
 import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
+import com.mrk.mrkgallery.adapter.XFragmentPagerAdapter;
 import com.mrk.mrkgallery.listener.MMListener;
+import com.mrk.mrkgallery.model.FragmentGenerator;
 import com.mrk.mrkgallery.task.LabelDetectTask;
 
 import java.io.File;
@@ -31,14 +37,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by huarong on 2018/2/26.
- */
-public class MainActivity extends AppCompatActivity implements MMListener {
+public class MainActivity extends AppCompatActivity implements MMListener, TabLayout.OnTabSelectedListener {
     private static final String LOG_TAG = "label_detect";
 
-    private static final int REQUEST_IMAGE_TAKE = 100;
-    private static final int REQUEST_IMAGE_SELECT = 200;
+    //    private static final int REQUEST_IMAGE_TAKE = 100;
+//    private static final int REQUEST_IMAGE_SELECT = 200;
     private static final String[] LABEL_CATEGORYS = {
             "People",
             "Food",
@@ -169,11 +172,14 @@ public class MainActivity extends AppCompatActivity implements MMListener {
         LABEL_CONTENTS.put(125, "guitar");
     }
 
-    private Button btnTake;
-    private Button btnSelect;
-    private ImageView ivImage;
-    private TextView tvLabel;
+    //    private Button btnTake;
+//    private Button btnSelect;
+//    private ImageView ivImage;
+//    private TextView tvLabel;
     private ProgressDialog dialog;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private FragmentPagerAdapter fpa;
     private Uri fileUri;
     private Bitmap bmp;
     private File mediaFile;
@@ -181,43 +187,46 @@ public class MainActivity extends AppCompatActivity implements MMListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_gallery);
 
-        ivImage = (ImageView) findViewById(R.id.image);
-        tvLabel = (TextView) findViewById(R.id.label);
-        btnSelect = (Button) findViewById(R.id.btnSelect);
-        btnTake = (Button) findViewById(R.id.btnTake);
+        initView();
+        initData();
+
+//        ivImage = (ImageView) findViewById(R.id.image);
+//        tvLabel = (TextView) findViewById(R.id.label);
+//        btnSelect = (Button) findViewById(R.id.btnSelect);
+//        btnTake = (Button) findViewById(R.id.btnTake);
 
         // 拍照
-        btnTake.setOnClickListener(new Button.OnClickListener() {
+//        btnTake.setOnClickListener(new Button.OnClickListener() {
+//
+//            public void onClick(View v) {
+//                initDetect();
+//
+//                // fileUri = getOutputMediaFileUri();
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                    fileUri = FileProvider.getUriForFile(MainActivity.this, getPackageName() + ".fileprovider", getOutputMediaFile());
+//                } else {
+//                    fileUri = Uri.fromFile(getOutputMediaFile());
+//                }
+//                Log.d(LOG_TAG, "end get uri = " + fileUri);
+//
+//                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+//                startActivityForResult(i, REQUEST_IMAGE_TAKE);
+//            }
+//        });
 
-            public void onClick(View v) {
-                initDetect();
-
-                // fileUri = getOutputMediaFileUri();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    fileUri = FileProvider.getUriForFile(MainActivity.this, getPackageName() + ".fileprovider", getOutputMediaFile());
-                } else {
-                    fileUri = Uri.fromFile(getOutputMediaFile());
-                }
-                Log.d(LOG_TAG, "end get uri = " + fileUri);
-
-                Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                i.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                startActivityForResult(i, REQUEST_IMAGE_TAKE);
-            }
-        });
-
-        // 选择图片
-        btnSelect.setOnClickListener(new Button.OnClickListener() {
-
-            public void onClick(View v) {
-                initDetect();
-
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, REQUEST_IMAGE_SELECT);
-            }
-        });
+//        // 选择图片
+//        btnSelect.setOnClickListener(new Button.OnClickListener() {
+//
+//            public void onClick(View v) {
+//                initDetect();
+//
+//                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(i, REQUEST_IMAGE_SELECT);
+//            }
+//        });
 
         // 应用VisionBase静态类进行初始化，异步拿到服务的连接
         // To connect HiAi Engine service using VisionBase
@@ -245,84 +254,103 @@ public class MainActivity extends AppCompatActivity implements MMListener {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    private void initView() {
+        mTabLayout = (TabLayout) findViewById(R.id.bottom_tab_list);
+        mViewPager = (ViewPager) findViewById(R.id.tab_viewpager);
 
-        if ((requestCode == REQUEST_IMAGE_TAKE || requestCode == REQUEST_IMAGE_SELECT) && resultCode == RESULT_OK) {
-            String imgPath;
+        fpa = new XFragmentPagerAdapter(getSupportFragmentManager());
+        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(fpa);
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.addOnTabSelectedListener(this);
+    }
 
-            if (requestCode == REQUEST_IMAGE_TAKE) {
-                //imgPath = Environment.getExternalStorageDirectory() + fileUri.getPath();
-                imgPath = mediaFile.getAbsolutePath();
-            } else {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = MainActivity.this.getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                imgPath = cursor.getString(columnIndex);
-                cursor.close();
-            }
-            Log.d(LOG_TAG, "imgPath = " + imgPath);
+    private void initData() {
+        mTabLayout.removeAllTabs();
 
-            bmp = BitmapFactory.decodeFile(imgPath);
-            dialog = ProgressDialog.show(MainActivity.this,
-                    "Predicting...", "Wait for one sec...", true);
-
-            LabelDetectTask cnnTask = new LabelDetectTask(MainActivity.this);
-            cnnTask.execute(bmp);
-        } else {
-            btnTake.setEnabled(true);
-            btnSelect.setEnabled(true);
+        for (int i = 0; i < 2; i++) {
+            mTabLayout.addTab(mTabLayout.newTab().setIcon(FragmentGenerator.drawableArr[i]).setText(FragmentGenerator.strArr[i]));
         }
     }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if ((requestCode == REQUEST_IMAGE_TAKE || requestCode == REQUEST_IMAGE_SELECT) && resultCode == RESULT_OK) {
+//            String imgPath;
+//
+//            if (requestCode == REQUEST_IMAGE_TAKE) {
+//                //imgPath = Environment.getExternalStorageDirectory() + fileUri.getPath();
+//                imgPath = mediaFile.getAbsolutePath();
+//            } else {
+//                Uri selectedImage = data.getData();
+//                String[] filePathColumn = {MediaStore.Images.Media.DATA};
+//                Cursor cursor = MainActivity.this.getContentResolver().query(selectedImage,
+//                        filePathColumn, null, null, null);
+//                cursor.moveToFirst();
+//                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//                imgPath = cursor.getString(columnIndex);
+//                cursor.close();
+//            }
+//            Log.d(LOG_TAG, "imgPath = " + imgPath);
+//
+//            bmp = BitmapFactory.decodeFile(imgPath);
+//            dialog = ProgressDialog.show(MainActivity.this,
+//                    "Predicting...", "Wait for one sec...", true);
+//
+//            LabelDetectTask cnnTask = new LabelDetectTask(MainActivity.this);
+//            cnnTask.execute(bmp);
+//        } else {
+//            btnTake.setEnabled(true);
+//            btnSelect.setEnabled(true);
+//        }
+//    }
 
     @Override
     public void onTaskCompleted(Label label) {
-        ivImage.setImageBitmap(bmp);
-
-        if (label == null) {
-            tvLabel.setText("not get label");
-        } else {
-            String strLabel = "category: ";
-            int categoryID = label.getCategory();
-            if (categoryID < 0 || categoryID >= LABEL_CATEGORYS.length) {
-                strLabel += "Others";
-            } else {
-                strLabel += LABEL_CATEGORYS[categoryID];
-            }
-            strLabel += ", probability: " + String.valueOf(label.getCategoryProbability()) + "\n";
-
-            List<LabelContent> labelContents = label.getLabelContent();
-            for (LabelContent labelContent : labelContents) {
-                strLabel += "labelContent: ";
-                int labelContentID = labelContent.getLabelId();
-                String name = LABEL_CONTENTS.get(labelContentID);
-                if (name == null) {
-                    strLabel += "other";
-                } else {
-                    strLabel += name;
-                }
-                strLabel += ", probability: " + String.valueOf(labelContent.getProbability()) + "\n";
-            }
-            tvLabel.setText(strLabel);
-        }
-
-        btnTake.setEnabled(true);
-        btnSelect.setEnabled(true);
-
-        if (dialog != null) {
-            dialog.dismiss();
-        }
+//        ivImage.setImageBitmap(bmp);
+//
+//        if (label == null) {
+//            tvLabel.setText("not get label");
+//        } else {
+//            String strLabel = "category: ";
+//            int categoryID = label.getCategory();
+//            if (categoryID < 0 || categoryID >= LABEL_CATEGORYS.length) {
+//                strLabel += "Others";
+//            } else {
+//                strLabel += LABEL_CATEGORYS[categoryID];
+//            }
+//            strLabel += ", probability: " + String.valueOf(label.getCategoryProbability()) + "\n";
+//
+//            List<LabelContent> labelContents = label.getLabelContent();
+//            for (LabelContent labelContent : labelContents) {
+//                strLabel += "labelContent: ";
+//                int labelContentID = labelContent.getLabelId();
+//                String name = LABEL_CONTENTS.get(labelContentID);
+//                if (name == null) {
+//                    strLabel += "other";
+//                } else {
+//                    strLabel += name;
+//                }
+//                strLabel += ", probability: " + String.valueOf(labelContent.getProbability()) + "\n";
+//            }
+//            tvLabel.setText(strLabel);
+//        }
+//
+//        btnTake.setEnabled(true);
+//        btnSelect.setEnabled(true);
+//
+//        if (dialog != null) {
+//            dialog.dismiss();
+//        }
     }
 
-    private void initDetect() {
-        btnTake.setEnabled(false);
-        btnSelect.setEnabled(false);
-        tvLabel.setText("");
-    }
+//    private void initDetect() {
+//        btnTake.setEnabled(false);
+//        btnSelect.setEnabled(false);
+//        tvLabel.setText("");
+//    }
 
     /**
      * Create a file Uri for saving an image or video
@@ -337,24 +365,43 @@ public class MainActivity extends AppCompatActivity implements MMListener {
     /**
      * Create a File for saving an image
      */
-    private File getOutputMediaFile() {
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "LabelDetect");
+//    private File getOutputMediaFile() {
+//        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "LabelDetect");
+//
+//        // Create the storage directory if it does not exist
+//        if (!mediaStorageDir.exists()) {
+//            if (!mediaStorageDir.mkdirs()) {
+//                Log.d(LOG_TAG, "failed to create directory");
+//                return null;
+//            }
+//        }
+//
+//        // Create a media file name
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+//                "IMG_" + timeStamp + ".jpg");
+//        Log.d(LOG_TAG, "mediaFile " + mediaFile);
+//
+//        return mediaFile;
+//    }
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        int position = tab.getPosition();
+        onTabItemSelected(position);
+    }
 
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                Log.d(LOG_TAG, "failed to create directory");
-                return null;
-            }
-        }
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
 
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_" + timeStamp + ".jpg");
-        Log.d(LOG_TAG, "mediaFile " + mediaFile);
+    }
 
-        return mediaFile;
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
+    }
+
+    private void onTabItemSelected(int position) {
+        Fragment fragment = fpa.getItem(position);
     }
 
 }
