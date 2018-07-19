@@ -1,6 +1,5 @@
 package com.mrk.mrkgallery.view;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,7 +23,6 @@ import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
 import com.mrk.mrkgallery.listener.MMListener;
-import com.mrk.mrkgallery.task.LabelDetectTask;
 import com.mrk.mrkgallery.util.DbHelper;
 
 import org.json.JSONObject;
@@ -43,13 +41,15 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class PhotoFragment extends Fragment implements MMListener,
+public class PhotoFragment extends Fragment implements
         MRecyclerViewAdapter.OnItemClickListener, MRecyclerViewAdapter.OnItemLongClickListener {
     private static final String TAG = PhotoFragment.class.getSimpleName();
 
     private Context mContext;
     private RecyclerView mPhotoView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
+    private LabelDetector labelDetector;
+    private long startTime, endTime;
 
     @Override
     public void onAttach(Context context) {
@@ -67,6 +67,11 @@ public class PhotoFragment extends Fragment implements MMListener,
         mAdapter = new MRecyclerViewAdapter<PhotoItem>(mContext, photoList);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
+
+        Log.i(TAG, "init LabelDetector");
+        // 定义detector实例，将此工程的Context当做入参
+        labelDetector = new LabelDetector(mContext);
+        Log.i(TAG, "start to get label");
     }
 
     @Nullable
@@ -154,23 +159,18 @@ public class PhotoFragment extends Fragment implements MMListener,
                 }
             }
         }, BackpressureStrategy.BUFFER)
-                .flatMap(new Function<PhotoItem, Publisher<PhotoItem>>() {
+                .map(new Function<PhotoItem, PhotoItem>() {
 
                     @Override
-                    public Publisher<PhotoItem> apply(@NonNull PhotoItem photoItem) throws Exception {
+                    public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         Bitmap bmp = BitmapFactory.decodeFile(photoItem.getPhotoPath());
-
-                        Log.i(TAG, "init LabelDetector");
-                        // 定义detector实例，将此工程的Context当做入参
-                        labelDetector = new LabelDetector(mContext);
-                        Log.i(TAG, "start to get label");
 
                         startTime = System.currentTimeMillis();
                         Label result_label = getLabel(bmp);
                         endTime = System.currentTimeMillis();
                         Log.i(TAG, String.format("labeldetect whole time: %d ms", endTime - startTime));
 
-                        //release engine after detect finished
+                        // release engine after detect finished
                         labelDetector.release();
 
                         if (result_label == null) {
@@ -183,7 +183,6 @@ public class PhotoFragment extends Fragment implements MMListener,
                             } else {
                                 strLabel += DbHelper.LABEL_CATEGORYS[categoryID];
                             }
-                            strLabel += ", probability: " + String.valueOf(result_label.getCategoryProbability()) + "\n";
 
                             List<LabelContent> labelContents = result_label.getLabelContent();
                             for (LabelContent labelContent : labelContents) {
@@ -195,7 +194,6 @@ public class PhotoFragment extends Fragment implements MMListener,
                                 } else {
                                     strLabel += name;
                                 }
-                                strLabel += ", probability: " + String.valueOf(labelContent.getProbability()) + "\n";
                             }
                             photoItem.setPhotoName(strLabel);
                         }
@@ -214,10 +212,6 @@ public class PhotoFragment extends Fragment implements MMListener,
                     }
                 });
     }
-
-    private LabelDetector labelDetector;
-    private long startTime;
-    private long endTime;
 
     public Label getLabel(Bitmap bitmap) {
         if (bitmap == null) {
@@ -261,11 +255,6 @@ public class PhotoFragment extends Fragment implements MMListener,
         }
 
         return label;
-    }
-
-    @Override
-    public void onTaskCompleted(Label label) {
-
     }
 
 }
