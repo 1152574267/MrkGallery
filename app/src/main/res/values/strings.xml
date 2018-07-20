@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">MrkGallery</string>
+    <string name="tv_image_scene_detect">场景检测</string>
     <string name="tv_image_label_detect">图片分类标签</string>
-    <string name="tv_123">123</string>
 </resources>
