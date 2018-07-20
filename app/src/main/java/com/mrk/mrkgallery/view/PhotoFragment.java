@@ -117,6 +117,16 @@ public class PhotoFragment extends Fragment implements
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+
+        if (null != sceneDetector) {
+            sceneDetector.release();
+        }
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
 
