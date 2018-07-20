@@ -15,18 +15,17 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.huawei.hiai.vision.image.detector.LabelDetector;
-import com.huawei.hiai.vision.visionkit.common.Frame;
+import com.huawei.hiai.vision.image.detector.SceneDetector;     //加载场景检测detector类
+import com.huawei.hiai.vision.visionkit.common.Frame;           //加载Frame类
 import com.huawei.hiai.vision.visionkit.image.detector.Label;
-import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;    //加载标签检测内容类
+import com.huawei.hiai.vision.visionkit.image.detector.Scene;   //加载场景检测结果类
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
-import com.mrk.mrkgallery.listener.MMListener;
 import com.mrk.mrkgallery.util.DbHelper;
 
 import org.json.JSONObject;
-import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +48,7 @@ public class PhotoFragment extends Fragment implements
     private Context mContext;
     private RecyclerView mPhotoView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
+    private SceneDetector sceneDetector;
     private LabelDetector labelDetector;
     private long startTime, endTime;
 
@@ -74,6 +74,7 @@ public class PhotoFragment extends Fragment implements
         // 定义detector实例，将此工程的Context当做入参
         labelDetector = new LabelDetector(mContext);
         Log.i(TAG, "start to get label");
+        sceneDetector = new SceneDetector(mContext);
     }
 
     @Nullable
@@ -159,45 +160,58 @@ public class PhotoFragment extends Fragment implements
                 }
             }
         }, BackpressureStrategy.BUFFER)
-                .delay(1, TimeUnit.SECONDS)
+                //.delay(1, TimeUnit.SECONDS)
                 .map(new Function<PhotoItem, PhotoItem>() {
 
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         Bitmap bmp = BitmapFactory.decodeFile(photoItem.getPhotoPath());
 
-                        startTime = System.currentTimeMillis();
-                        Label result_label = getLabel(bmp);
-                        endTime = System.currentTimeMillis();
-                        Log.i(TAG, String.format("labeldetect whole time: %d ms", endTime - startTime));
+//                        startTime = System.currentTimeMillis();
+//                        Label result_label = getLabel(bmp);
+//                        endTime = System.currentTimeMillis();
+//                        Log.i(TAG, String.format("labeldetect whole time: %d ms", endTime - startTime));
+//
+//                        // release engine after detect finished
+//                        // labelDetector.release();
+//
+//                        if (result_label == null) {
+//                            photoItem.setPhotoName("not get label");
+//                        } else {
+//                            String strLabel = "category: ";
+//                            int categoryID = result_label.getCategory();
+//                            if (categoryID < 0 || categoryID >= DbHelper.LABEL_CATEGORYS.length) {
+//                                strLabel += "Others";
+//                            } else {
+//                                strLabel += DbHelper.LABEL_CATEGORYS[categoryID];
+//                            }
+//
+//                            List<LabelContent> labelContents = result_label.getLabelContent();
+//                            for (LabelContent labelContent : labelContents) {
+//                                strLabel += "labelContent: ";
+//                                int labelContentID = labelContent.getLabelId();
+//                                String name = DbHelper.LABEL_CONTENTS.get(labelContentID);
+//                                if (name == null) {
+//                                    strLabel += "other";
+//                                } else {
+//                                    strLabel += name;
+//                                }
+//                            }
+//                            photoItem.setPhotoName(strLabel);
 
-                        // release engine after detect finished
-                        // labelDetector.release();
+                        /********************** 场景检测 ***************************/
+                        // 构造Frame对象
+                        Frame frame = new Frame();
+                        frame.setBitmap(bmp);
 
-                        if (result_label == null) {
-                            photoItem.setPhotoName("not get label");
-                        } else {
-                            String strLabel = "category: ";
-                            int categoryID = result_label.getCategory();
-                            if (categoryID < 0 || categoryID >= DbHelper.LABEL_CATEGORYS.length) {
-                                strLabel += "Others";
-                            } else {
-                                strLabel += DbHelper.LABEL_CATEGORYS[categoryID];
-                            }
-
-                            List<LabelContent> labelContents = result_label.getLabelContent();
-                            for (LabelContent labelContent : labelContents) {
-                                strLabel += "labelContent: ";
-                                int labelContentID = labelContent.getLabelId();
-                                String name = DbHelper.LABEL_CONTENTS.get(labelContentID);
-                                if (name == null) {
-                                    strLabel += "other";
-                                } else {
-                                    strLabel += name;
-                                }
-                            }
-                            photoItem.setPhotoName(strLabel);
-                        }
+                        // 进行场景检测
+                        JSONObject jsonScene = sceneDetector.detect(frame, null);
+                        // 获取Java类形式的结果
+                        Scene sc = sceneDetector.convertResult(jsonScene);
+                        //获取识别出来的场景类型
+                        int type = sc.getType();
+                        photoItem.setPhotoName(type + "");
+                        /********************** 场景检测 ***************************/
 
                         return photoItem;
                     }
@@ -209,7 +223,7 @@ public class PhotoFragment extends Fragment implements
                     @Override
                     public void accept(PhotoItem photoItem) throws Exception {
                         mAdapter.addItem(photoItem);
-                        //mPhotoView.scrollToPosition(0);
+                        // mPhotoView.scrollToPosition(0);
 
                         labelDetector.release();
                     }
@@ -235,7 +249,7 @@ public class PhotoFragment extends Fragment implements
          * 非null: 即回调函数接口对象，表示异步处理，用于异步返回结果, 目前暂不支持异步处理
          * */
         JSONObject jsonObject = labelDetector.detect(frame, null);
-        Log.d(TAG, "labelDetector detect: "+(jsonObject == null));
+        Log.d(TAG, "labelDetector detect: " + (jsonObject == null));
         /**
          * 通过convertResult将json字符串转为java类的形式（您也可以自己解析json字符串）
          *
