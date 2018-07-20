@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.XRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.FileItem;
@@ -117,7 +118,9 @@ public class SceneListFragment extends Fragment
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "---onItemClick: " + position, Toast.LENGTH_SHORT).show();
+
+        ((MainActivity)getActivity()).mm();
     }
 
     @Override

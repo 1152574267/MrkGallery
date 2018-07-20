@@ -3,6 +3,7 @@ package com.mrk.mrkgallery;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,8 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 //    private ProgressDialog dialog;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private FragmentPagerAdapter fpa;
+    //private FragmentPagerAdapter fpa;
+    private XFragmentPagerAdapter fpa;
 //    private Uri fileUri;
 //    private Bitmap bmp;
 //    private File mediaFile;
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mViewPager = (ViewPager) findViewById(R.id.tab_viewpager);
 
         fpa = new XFragmentPagerAdapter(getSupportFragmentManager());
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(1);
         mViewPager.setAdapter(fpa);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.addOnTabSelectedListener(this);
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private void initData() {
         mTabLayout.removeAllTabs();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             mTabLayout.addTab(mTabLayout.newTab().setIcon(FragmentGenerator.drawableArr[i]).setText(FragmentGenerator.strArr[i]));
         }
     }
@@ -167,6 +169,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
 
     private void onTabItemSelected(int position) {
         Fragment fragment = fpa.getItem(position);
+    }
+
+    public void mm() {
+       fpa.updateFragment();
     }
 
 }
