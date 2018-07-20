@@ -12,6 +12,7 @@ import java.util.List;
 
 public class DbHelper {
     public static final HashMap<Integer, String> LABEL_CONTENTS = new HashMap<Integer, String>();
+    public static final HashMap<Integer, String> SCENE_CONTENTS = new HashMap<Integer, String>();
 
     public static void initLabelContents() {
         LABEL_CONTENTS.clear();
@@ -50,8 +51,8 @@ public class DbHelper {
         LABEL_CONTENTS.put(37, "basketball");
         LABEL_CONTENTS.put(38, "badminton");
         LABEL_CONTENTS.put(39, "football");
-        LABEL_CONTENTS.put(40, "city overlook");
         LABEL_CONTENTS.put(41, "sunrise sunset");
+        LABEL_CONTENTS.put(40, "city overlook");
         LABEL_CONTENTS.put(42, "ocean & beach");
         LABEL_CONTENTS.put(43, "bridge");
         LABEL_CONTENTS.put(44, "sky");
@@ -142,6 +143,33 @@ public class DbHelper {
             "Accessories",
             "Toy"
     };
+
+    public static void initSceneContents() {
+        SCENE_CONTENTS.clear();
+
+        SCENE_CONTENTS.put(0, "UNKNOWN");
+        SCENE_CONTENTS.put(1, "UNSUPPORT");
+        SCENE_CONTENTS.put(2, "BEACH");
+        SCENE_CONTENTS.put(3, "BLUESKY");
+        SCENE_CONTENTS.put(4, "SUNSET");
+        SCENE_CONTENTS.put(5, "FOOD");
+        SCENE_CONTENTS.put(6, "FLOWER");
+        SCENE_CONTENTS.put(7, "GREENPLANT");
+        SCENE_CONTENTS.put(8, "SNOW");
+        SCENE_CONTENTS.put(9, "NIGHT");
+        SCENE_CONTENTS.put(10, "TEXT");
+        SCENE_CONTENTS.put(11, "STAGE");
+        SCENE_CONTENTS.put(12, "CAT");
+        SCENE_CONTENTS.put(13, "DOG");
+        SCENE_CONTENTS.put(14, "FIREWORK");
+        SCENE_CONTENTS.put(15, "OVERCAST");
+        SCENE_CONTENTS.put(16, "FALLEN");
+        SCENE_CONTENTS.put(17, "PANDA");
+        SCENE_CONTENTS.put(18, "CAR");
+        SCENE_CONTENTS.put(19, "OLDBUILDINGS");
+        SCENE_CONTENTS.put(20, "BICYCLE");
+        SCENE_CONTENTS.put(21, "WATERFALL");
+    }
 
     public static List<PhotoItem> getPhotoList(Context context) {
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();

@@ -70,6 +70,7 @@ public class PhotoFragment extends Fragment implements
         mAdapter.setOnItemLongClickListener(this);
 
         DbHelper.initLabelContents();
+        DbHelper.initSceneContents();
         Log.i(TAG, "init LabelDetector");
         // 定义detector实例，将此工程的Context当做入参
         labelDetector = new LabelDetector(mContext);
@@ -210,7 +211,7 @@ public class PhotoFragment extends Fragment implements
                         Scene sc = sceneDetector.convertResult(jsonScene);
                         //获取识别出来的场景类型
                         int type = sc.getType();
-                        photoItem.setPhotoName(type + "");
+                        photoItem.setPhotoName(DbHelper.SCENE_CONTENTS.get(type));
                         /********************** 场景检测 ***************************/
 
                         return photoItem;
