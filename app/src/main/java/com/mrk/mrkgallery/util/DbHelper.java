@@ -235,18 +235,20 @@ public class DbHelper {
         Bitmap bmp = BitmapFactory.decodeFile(imgPath);
 
         startTime = System.currentTimeMillis();
-        Label result_label = getLabel(bmp, labelDetector);
+//        Label result_label = getLabel(bmp, labelDetector);
+        Frame frame = new Frame();
+        frame.setBitmap(bmp);
+        JSONObject jsonObject = labelDetector.detect(frame, null);
+        Label result_label = labelDetector.convertResult(jsonObject);
         endTime = System.currentTimeMillis();
         Log.i("getDetectLabel", String.format("labeldetect time: %d ms", endTime - startTime));
-
-        // release engine after detect finished
-        // labelDetector.release();
 
         if (result_label == null) {
             detectLabel = "not get label";
         } else {
             detectLabel = "category: ";
             int categoryID = result_label.getCategory();
+            Log.i("getDetectLabel", "categoryID: " + categoryID);
             if (categoryID < 0 || categoryID >= LABEL_CATEGORYS.length) {
                 detectLabel += "Others";
             } else {
@@ -255,7 +257,7 @@ public class DbHelper {
 
             List<LabelContent> labelContents = result_label.getLabelContent();
             for (LabelContent labelContent : labelContents) {
-                detectLabel += ", labelContent: ";
+                detectLabel += " labelContent: ";
                 int labelContentID = labelContent.getLabelId();
                 String name = LABEL_CONTENTS.get(labelContentID);
                 if (name == null) {
