@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.huawei.hiai.vision.image.detector.LabelDetector;
 import com.huawei.hiai.vision.image.detector.SceneDetector;
@@ -18,12 +19,30 @@ import com.mrk.mrkgallery.model.MediaDataGenerator;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class DbHelper {
-    public static final HashMap<Integer, String> LABEL_CONTENTS = new HashMap<Integer, String>();
-    public static final HashMap<Integer, String> SCENE_CONTENTS = new HashMap<Integer, String>();
+    public static final SparseArray<String> LABEL_CONTENTS = new SparseArray<String>();
+    public static final SparseArray<String> SCENE_CONTENTS = new SparseArray<String>();
+
+    public static final String[] LABEL_CATEGORYS = {
+            "People",
+            "Food",
+            "Landscapes",
+            "Documents",
+            "Festival",
+            "Activities",
+            "Animal",
+            "Sports",
+            "Vehicle",
+            "Household products",
+            "Appliance",
+            "Art",
+            "Tools",
+            "Apparel",
+            "Accessories",
+            "Toy"
+    };
 
     public static void initLabelContents() {
         LABEL_CONTENTS.clear();
@@ -136,25 +155,6 @@ public class DbHelper {
         LABEL_CONTENTS.put(125, "guitar");
     }
 
-    public static final String[] LABEL_CATEGORYS = {
-            "People",
-            "Food",
-            "Landscapes",
-            "Documents",
-            "Festival",
-            "Activities",
-            "Animal",
-            "Sports",
-            "Vehicle",
-            "Household products",
-            "Appliance",
-            "Art",
-            "Tools",
-            "Apparel",
-            "Accessories",
-            "Toy"
-    };
-
     public static void initSceneContents() {
         SCENE_CONTENTS.clear();
 
@@ -229,8 +229,8 @@ public class DbHelper {
     }
 
     public static String getDetectLabel(String imgPath, LabelDetector labelDetector) {
-        String detectLabel = "";
         long startTime = 0, endTime = 0;
+        String detectLabel = "";
 
         Bitmap bmp = BitmapFactory.decodeFile(imgPath);
 
