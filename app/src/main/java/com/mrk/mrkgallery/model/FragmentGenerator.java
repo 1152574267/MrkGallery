@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.view.LabelDetectFragment;
-import com.mrk.mrkgallery.view.SceneDetectFragment;
+import com.mrk.mrkgallery.view.SceneListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class FragmentGenerator {
 
     public static List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<Fragment>();
-        fragmentList.add(new SceneDetectFragment());
+        fragmentList.add(new SceneListFragment());
         fragmentList.add(new LabelDetectFragment());
 
         return fragmentList;

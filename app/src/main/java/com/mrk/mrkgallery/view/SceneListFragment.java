@@ -2,7 +2,6 @@ package com.mrk.mrkgallery.view;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,11 +26,11 @@ public class SceneListFragment extends Fragment
     private static final String TAG = SceneListFragment.class.getSimpleName();
 
     private Context mContext;
-    private RecyclerView fileList;
+    private RecyclerView mRecyclerView;
     private XRecyclerViewAdapter<FileItem> mAdapter;
 
-    private boolean isSdCardMounted;
-    private String mSdCardPath;
+//    private boolean isSdCardMounted;
+//    private String mSdCardPath;
 
     @Override
     public void onAttach(Context context) {
@@ -45,19 +44,9 @@ public class SceneListFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        List<FileItem> mFileList = new ArrayList<FileItem>();
-        mFileList.clear();
-        for (int i = 0; i < DbHelper.SCENE_CONTENTS.size(); i++) {
-            FileItem item = new FileItem();
-            item.setFileName(DbHelper.SCENE_CONTENTS.get(i));
-            mFileList.add(item);
-        }
-        mAdapter = new XRecyclerViewAdapter<FileItem>(mContext, mFileList);
-        mAdapter.setOnItemClickListener(this);
-        mAdapter.setOnItemLongClickListener(this);
-
-        isSdCardMounted = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-        mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        DbHelper.initSceneContents();
+//        isSdCardMounted = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+//        mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     @Nullable
@@ -75,17 +64,30 @@ public class SceneListFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated");
 
-        fileList = (RecyclerView) view.findViewById(R.id.tablist);
-        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
-        fileList.setLayoutManager(layoutManager);
-        fileList.addItemDecoration(new MyDecoration(mContext, MyDecoration.HORIZONTAL_LIST));
-        fileList.setAdapter(mAdapter);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.tablist);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated");
+
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.addItemDecoration(new MyDecoration(mContext, MyDecoration.HORIZONTAL_LIST));
+
+        List<FileItem> mFileList = new ArrayList<FileItem>();
+        mFileList.clear();
+        for (int i = 0; i < DbHelper.SCENE_CONTENTS.size(); i++) {
+            FileItem item = new FileItem();
+            item.setFileName(DbHelper.SCENE_CONTENTS.get(i));
+            mFileList.add(item);
+        }
+
+        mAdapter = new XRecyclerViewAdapter<FileItem>(mContext, mFileList);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(this);
+        mAdapter.setOnItemLongClickListener(this);
     }
 
     @Override
