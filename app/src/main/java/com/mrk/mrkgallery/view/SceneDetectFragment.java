@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.huawei.hiai.vision.image.detector.LabelDetector;
 import com.huawei.hiai.vision.image.detector.SceneDetector;     //加载场景检测detector类
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
@@ -33,15 +32,14 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class PhotoFragment extends Fragment implements
+public class SceneDetectFragment extends Fragment implements
         MRecyclerViewAdapter.OnItemClickListener, MRecyclerViewAdapter.OnItemLongClickListener {
-    private static final String TAG = PhotoFragment.class.getSimpleName();
+    private static final String TAG = SceneDetectFragment.class.getSimpleName();
 
     private Context mContext;
     private RecyclerView mPhotoView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
     private SceneDetector sceneDetector;
-//    private LabelDetector labelDetector;
 
     @Override
     public void onAttach(Context context) {
@@ -60,12 +58,7 @@ public class PhotoFragment extends Fragment implements
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
 
-        // DbHelper.initLabelContents();
         DbHelper.initSceneContents();
-//        Log.i(TAG, "init LabelDetector");
-//        // 定义detector实例，将此工程的Context当做入参
-//        labelDetector = new LabelDetector(mContext);
-//        Log.i(TAG, "start to get label");
         sceneDetector = new SceneDetector(mContext);
     }
 
@@ -162,7 +155,6 @@ public class PhotoFragment extends Fragment implements
                 }
             }
         }, BackpressureStrategy.BUFFER)
-                //.delay(1, TimeUnit.SECONDS)
                 .map(new Function<PhotoItem, PhotoItem>() {
 
                     @Override
@@ -171,11 +163,6 @@ public class PhotoFragment extends Fragment implements
                         String sceneType = DbHelper.getSceneType(photoItem.getPhotoPath(), sceneDetector);
                         photoItem.setPhotoName(sceneType);
                         /********************** 场景检测 ***************************/
-
-                        /********************** 图片分类检测 ***********************/
-//                        String detectLabel = DbHelper.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
-//                        photoItem.setPhotoName(detectLabel);
-                        /********************** 图片分类检测************************/
 
                         return photoItem;
                     }
@@ -188,9 +175,6 @@ public class PhotoFragment extends Fragment implements
                     public void accept(PhotoItem photoItem) throws Exception {
                         mAdapter.addItem(photoItem);
                         // mPhotoView.scrollToPosition(0);
-
-                        //labelDetector.release();
-                        //sceneDetector.release();
                     }
                 });
     }
