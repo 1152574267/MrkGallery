@@ -1,8 +1,6 @@
 package com.mrk.mrkgallery.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,20 +14,14 @@ import android.widget.Toast;
 
 import com.huawei.hiai.vision.image.detector.LabelDetector;
 import com.huawei.hiai.vision.image.detector.SceneDetector;     //加载场景检测detector类
-import com.huawei.hiai.vision.visionkit.common.Frame;           //加载Frame类
-import com.huawei.hiai.vision.visionkit.image.detector.Label;
-import com.huawei.hiai.vision.visionkit.image.detector.Scene;   //加载场景检测结果类
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
 import com.mrk.mrkgallery.util.DbHelper;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
@@ -49,8 +41,7 @@ public class PhotoFragment extends Fragment implements
     private RecyclerView mPhotoView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
     private SceneDetector sceneDetector;
-    private LabelDetector labelDetector;
-    private long startTime, endTime;
+//    private LabelDetector labelDetector;
 
     @Override
     public void onAttach(Context context) {
@@ -69,12 +60,12 @@ public class PhotoFragment extends Fragment implements
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
 
-        DbHelper.initLabelContents();
+        // DbHelper.initLabelContents();
         DbHelper.initSceneContents();
-        Log.i(TAG, "init LabelDetector");
-        // 定义detector实例，将此工程的Context当做入参
-        labelDetector = new LabelDetector(mContext);
-        Log.i(TAG, "start to get label");
+//        Log.i(TAG, "init LabelDetector");
+//        // 定义detector实例，将此工程的Context当做入参
+//        labelDetector = new LabelDetector(mContext);
+//        Log.i(TAG, "start to get label");
         sceneDetector = new SceneDetector(mContext);
     }
 
@@ -166,53 +157,15 @@ public class PhotoFragment extends Fragment implements
 
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
-                        Bitmap bmp = BitmapFactory.decodeFile(photoItem.getPhotoPath());
-
-//                        startTime = System.currentTimeMillis();
-//                        Label result_label = getLabel(bmp);
-//                        endTime = System.currentTimeMillis();
-//                        Log.i(TAG, String.format("labeldetect whole time: %d ms", endTime - startTime));
-//
-//                        // release engine after detect finished
-//                        // labelDetector.release();
-//
-//                        if (result_label == null) {
-//                            photoItem.setPhotoName("not get label");
-//                        } else {
-//                            String strLabel = "category: ";
-//                            int categoryID = result_label.getCategory();
-//                            if (categoryID < 0 || categoryID >= DbHelper.LABEL_CATEGORYS.length) {
-//                                strLabel += "Others";
-//                            } else {
-//                                strLabel += DbHelper.LABEL_CATEGORYS[categoryID];
-//                            }
-//
-//                            List<LabelContent> labelContents = result_label.getLabelContent();
-//                            for (LabelContent labelContent : labelContents) {
-//                                strLabel += "labelContent: ";
-//                                int labelContentID = labelContent.getLabelId();
-//                                String name = DbHelper.LABEL_CONTENTS.get(labelContentID);
-//                                if (name == null) {
-//                                    strLabel += "other";
-//                                } else {
-//                                    strLabel += name;
-//                                }
-//                            }
-//                            photoItem.setPhotoName(strLabel);
-
                         /********************** 场景检测 ***************************/
-                        // 构造Frame对象
-                        Frame frame = new Frame();
-                        frame.setBitmap(bmp);
-
-                        // 进行场景检测
-                        JSONObject jsonScene = sceneDetector.detect(frame, null);
-                        // 获取Java类形式的结果
-                        Scene sc = sceneDetector.convertResult(jsonScene);
-                        //获取识别出来的场景类型
-                        int type = sc.getType();
-                        photoItem.setPhotoName(DbHelper.SCENE_CONTENTS.get(type));
+                        String sceneType = DbHelper.getSceneType(photoItem.getPhotoPath(), sceneDetector);
+                        photoItem.setPhotoName(sceneType);
                         /********************** 场景检测 ***************************/
+
+                        /********************** 图片分类检测 ***********************/
+//                        String detectLabel = DbHelper.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
+//                        photoItem.setPhotoName(detectLabel);
+                        /********************** 图片分类检测************************/
 
                         return photoItem;
                     }
@@ -226,54 +179,10 @@ public class PhotoFragment extends Fragment implements
                         mAdapter.addItem(photoItem);
                         // mPhotoView.scrollToPosition(0);
 
-                        labelDetector.release();
+                        //labelDetector.release();
+                        //sceneDetector.release();
                     }
                 });
-    }
-
-    public Label getLabel(Bitmap bitmap) {
-        if (bitmap == null) {
-            Log.e(TAG, "bitmap is null ");
-            return null;
-        }
-
-        // 定义frame
-        Frame frame = new Frame();
-        // 将需进行图片分类标签图像的bitmap放入frame中
-        frame.setBitmap(bitmap);
-        Log.d(TAG, "runVisionService " + "start get label");
-
-        /**
-         * 调用detect方法得到图片分类标签检测结果
-         *
-         * null: 表示同步处理
-         * 非null: 即回调函数接口对象，表示异步处理，用于异步返回结果, 目前暂不支持异步处理
-         * */
-        JSONObject jsonObject = labelDetector.detect(frame, null);
-        Log.d(TAG, "labelDetector detect: " + (jsonObject == null));
-        /**
-         * 通过convertResult将json字符串转为java类的形式（您也可以自己解析json字符串）
-         *
-         * label: 标签结果
-         * category: 图片类别
-         * categoryProbability: 图片类别置信度
-         * labelContents: 标签列表
-         * labelId: 标签ID
-         * probability: 标签置信度，范围：-1及 0~1，-1表示算法未提供置信度
-         *
-         * 类别ID
-         * 0 - 人像, 1 - 美食, 2 - 风景, 3 - 文档, 4 - 节日,
-         * 5 - 活动, 6 - 动物, 7 - 运动, 8 - 交通工具, 9 - 家居,
-         * 10 - 电器, 11 - 艺术, 12 - 工具, 13 - 服饰, 14 - 配饰,
-         * 15 - 玩具, -2 - 其他
-         * */
-        Label label = labelDetector.convertResult(jsonObject);
-        if (null == label) {
-            Log.e(TAG, "label is null ");
-            return null;
-        }
-
-        return label;
     }
 
 }
