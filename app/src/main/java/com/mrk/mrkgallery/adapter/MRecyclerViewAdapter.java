@@ -1,6 +1,7 @@
 package com.mrk.mrkgallery.adapter;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
 import com.bumptech.glide.Glide;
 import com.mrk.mrkgallery.bean.PhotoItem;
-import com.mrk.mrkgallery.view.SceneDetectActivity;
 
 import java.util.List;
 
@@ -45,12 +44,12 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
             PhotoItem item = (PhotoItem) object;
             holder.tv.setText(item.getPhotoName());
 
-//            int width = ((SceneDetectActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();
-//            ViewGroup.LayoutParams params = holder.img.getLayoutParams();
-//            // 设置图片的相对于屏幕的宽高比
-//            params.width = width / 2;
-//            params.height = (int) (200 + Math.random() * 400);
-//            holder.img.setLayoutParams(params);
+            int width = ((AppCompatActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();
+            ViewGroup.LayoutParams params = holder.img.getLayoutParams();
+            // 设置图片的相对于屏幕的宽高比
+            params.width = width / 2;
+            params.height = (int) (200 + Math.random() * 400);
+            holder.img.setLayoutParams(params);
             Glide.with(mContext).load(item.getPhotoPath()).into(holder.img);
         }
 
