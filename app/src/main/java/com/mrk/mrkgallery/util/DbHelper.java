@@ -26,6 +26,7 @@ public class DbHelper {
     public static final SparseArray<String> SCENE_CONTENTS = new SparseArray<String>();
 
     public static final String[] LABEL_CATEGORYS = {
+            "Others",
             "People",
             "Food",
             "Landscapes",
