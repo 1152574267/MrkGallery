@@ -159,18 +159,18 @@ public class LabelDetectFragment extends Fragment implements
             }
         }, BackpressureStrategy.BUFFER)
                 //.delay(1, TimeUnit.SECONDS)
-                .map(new Function<PhotoItem, PhotoItem>() {
-
-                    @Override
-                    public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
-                        /********************** 图片分类检测 ***********************/
-                        String detectLabel = DbHelper.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
-                        photoItem.setPhotoName(detectLabel);
-                        /********************** 图片分类检测************************/
-
-                        return photoItem;
-                    }
-                })
+//                .map(new Function<PhotoItem, PhotoItem>() {
+//
+//                    @Override
+//                    public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
+//                        /********************** 图片分类检测 ***********************/
+//                        String detectLabel = DbHelper.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
+//                        photoItem.setPhotoName(detectLabel);
+//                        /********************** 图片分类检测************************/
+//
+//                        return photoItem;
+//                    }
+//                })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<PhotoItem>() {
