@@ -40,6 +40,7 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final T object = mDataList.get(position);
+
         if (object instanceof PhotoItem) {
             PhotoItem item = (PhotoItem) object;
             holder.tv.setText(item.getPhotoName());
