@@ -188,12 +188,12 @@ public class DbHelper {
         photoList.clear();
 
         final String[] imageColumns = MediaDataGenerator.ImageDataGenerator.imageColumns;
-        Cursor cursor = context.getContentResolver().query
-                (MediaDataGenerator.imageUri,
-                        imageColumns,
-                        null,
-                        null,
-                        imageColumns[3]);
+        Cursor cursor = context.getContentResolver().query(
+                MediaDataGenerator.imageUri,
+                imageColumns,
+                null,
+                null,
+                imageColumns[3]);
         if (cursor != null) {
             cursor.moveToFirst();
             do {
@@ -218,7 +218,6 @@ public class DbHelper {
         // 构造Frame对象
         Frame frame = new Frame();
         frame.setBitmap(bmp);
-
         // 进行场景检测
         JSONObject jsonScene = sceneDetector.detect(frame, null);
         // 获取Java类形式的结果
@@ -231,7 +230,7 @@ public class DbHelper {
 
     public static String getDetectLabel(String imgPath, LabelDetector labelDetector) {
         long startTime = 0, endTime = 0;
-        String detectLabel = "";
+        StringBuffer detectLabel = new StringBuffer();
 
         Bitmap bmp = BitmapFactory.decodeFile(imgPath);
 
@@ -245,31 +244,31 @@ public class DbHelper {
         Log.i("getDetectLabel", String.format("labeldetect time: %d ms", endTime - startTime));
 
         if (result_label == null) {
-            detectLabel = "not get label";
+            detectLabel.append("not get label");
         } else {
-//            detectLabel = "category: ";
+//            detectLabel.append("category: ");
             int categoryID = result_label.getCategory();
             Log.i("getDetectLabel", "categoryID: " + categoryID);
             if (categoryID < 0 || categoryID >= LABEL_CATEGORYS.length) {
-                detectLabel += "Others";
+                detectLabel.append("Others");
             } else {
-                detectLabel += LABEL_CATEGORYS[categoryID];
+                detectLabel.append(LABEL_CATEGORYS[categoryID]);
             }
 
 //            List<LabelContent> labelContents = result_label.getLabelContent();
 //            for (LabelContent labelContent : labelContents) {
-//                detectLabel += " labelContent: ";
+//                detectLabel.append(" labelContent: ");
 //                int labelContentID = labelContent.getLabelId();
 //                String name = LABEL_CONTENTS.get(labelContentID);
 //                if (name == null) {
-//                    detectLabel += "other";
+//                    detectLabel.append("other");
 //                } else {
-//                    detectLabel += name;
+//                    detectLabel.append(name);
 //                }
 //            }
         }
 
-        return detectLabel;
+        return detectLabel.toString().trim();
     }
 
     public static Label getLabel(Bitmap bitmap, LabelDetector labelDetector) {
@@ -282,7 +281,6 @@ public class DbHelper {
         Frame frame = new Frame();
         // 将需进行图片分类标签图像的bitmap放入frame中
         frame.setBitmap(bitmap);
-
         /**
          * 调用detect方法得到图片分类标签检测结果
          *
@@ -290,7 +288,6 @@ public class DbHelper {
          * 非null: 即回调函数接口对象，表示异步处理，用于异步返回结果, 目前暂不支持异步处理
          * */
         JSONObject jsonObject = labelDetector.detect(frame, null);
-
         /**
          * 通过convertResult将json字符串转为java类的形式（您也可以自己解析json字符串）
          *
