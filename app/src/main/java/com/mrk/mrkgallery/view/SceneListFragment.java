@@ -122,6 +122,7 @@ public class SceneListFragment extends Fragment
 
         Intent intent = new Intent(getActivity(), SceneDetectActivity.class);
         intent.putExtra("scene_type", mAdapter.getItem(position).getFileName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }
 

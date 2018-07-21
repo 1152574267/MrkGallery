@@ -122,6 +122,7 @@ public class LabelListFragment extends Fragment
 
         Intent intent = new Intent(getActivity(), LabelDetectActivity.class);
         intent.putExtra("label_type", mAdapter.getItem(position).getFileName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }
 
