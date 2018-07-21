@@ -16,7 +16,7 @@ public class FragmentGenerator {
     public static List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<Fragment>();
         fragmentList.add(new SceneListFragment());
-        //fragmentList.add(new LabelDetectFragment());
+        fragmentList.add(new LabelDetectFragment());
 
         return fragmentList;
     }

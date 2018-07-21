@@ -1,6 +1,7 @@
 package com.mrk.mrkgallery.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.XRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.FileItem;
@@ -118,9 +118,10 @@ public class SceneListFragment extends Fragment
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(mContext, "---onItemClick: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
-        ((MainActivity)getActivity()).mm();
+        Intent intent = new Intent(getActivity(), SceneDetectActivity.class);
+        getActivity().startActivity(intent);
     }
 
     @Override

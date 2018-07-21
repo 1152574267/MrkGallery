@@ -12,6 +12,7 @@ import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
 import com.bumptech.glide.Glide;
 import com.mrk.mrkgallery.bean.PhotoItem;
+import com.mrk.mrkgallery.view.SceneDetectActivity;
 
 import java.util.List;
 
@@ -44,12 +45,12 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
             PhotoItem item = (PhotoItem) object;
             holder.tv.setText(item.getPhotoName());
 
-            int width = ((MainActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();
-            ViewGroup.LayoutParams params = holder.img.getLayoutParams();
-            // 设置图片的相对于屏幕的宽高比
-            params.width = width / 2;
-            params.height = (int) (200 + Math.random() * 400);
-            holder.img.setLayoutParams(params);
+//            int width = ((SceneDetectActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();
+//            ViewGroup.LayoutParams params = holder.img.getLayoutParams();
+//            // 设置图片的相对于屏幕的宽高比
+//            params.width = width / 2;
+//            params.height = (int) (200 + Math.random() * 400);
+//            holder.img.setLayoutParams(params);
             Glide.with(mContext).load(item.getPhotoPath()).into(holder.img);
         }
 
