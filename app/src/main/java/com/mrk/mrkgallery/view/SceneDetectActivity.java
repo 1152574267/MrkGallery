@@ -1,10 +1,12 @@
 package com.mrk.mrkgallery.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,10 +38,17 @@ public class SceneDetectActivity extends AppCompatActivity implements
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
     private SceneDetector sceneDetector;
 
+    private String sceneType;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_photo);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            sceneType = intent.getStringExtra("scene_type");
+        }
 
         DbHelper.initSceneContents();
         sceneDetector = new SceneDetector(this);
@@ -110,13 +119,18 @@ public class SceneDetectActivity extends AppCompatActivity implements
                         return photoItem;
                     }
                 })
+
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<PhotoItem>() {
 
                     @Override
                     public void accept(PhotoItem photoItem) throws Exception {
-                        mAdapter.addItem(photoItem);
+                        String name = photoItem.getPhotoName();
+                        Log.d(TAG, "sceneType: " + sceneType + ", name: " + name);
+                        if (!TextUtils.isEmpty(sceneType) && name.equals(sceneType)) {
+                            mAdapter.addItem(photoItem);
+                        }
                         // mPhotoView.scrollToPosition(0);
                     }
                 });

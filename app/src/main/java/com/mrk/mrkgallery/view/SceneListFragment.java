@@ -121,6 +121,7 @@ public class SceneListFragment extends Fragment
         Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getActivity(), SceneDetectActivity.class);
+        intent.putExtra("scene_type", mAdapter.getItem(position).getFileName());
         getActivity().startActivity(intent);
     }
 
