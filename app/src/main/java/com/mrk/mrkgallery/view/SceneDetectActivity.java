@@ -26,9 +26,10 @@ import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 public class SceneDetectActivity extends AppCompatActivity implements
         MRecyclerViewAdapter.OnItemClickListener, MRecyclerViewAdapter.OnItemLongClickListener {
@@ -37,6 +38,8 @@ public class SceneDetectActivity extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
     private SceneDetector sceneDetector;
+    private CompositeDisposable mDisposables;
+    private DisposableSubscriber<PhotoItem> mSubscriber;
 
     private String sceneType;
 
@@ -49,6 +52,32 @@ public class SceneDetectActivity extends AppCompatActivity implements
         if (intent != null) {
             sceneType = intent.getStringExtra("scene_type");
         }
+
+        mDisposables = new CompositeDisposable();
+        mSubscriber = new DisposableSubscriber<PhotoItem>() {
+
+            @Override
+            public void onNext(PhotoItem photoItem) {
+                Log.d(TAG, "onNext");
+
+                String name = photoItem.getPhotoName();
+                Log.d(TAG, "sceneType: " + sceneType + ", name: " + name);
+                if (!TextUtils.isEmpty(sceneType) && name.equals(sceneType)) {
+                    mAdapter.addItem(photoItem);
+                }
+                // mPhotoView.scrollToPosition(0);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Log.d(TAG, "onError: " + t.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete");
+            }
+        };
 
         DbHelper.initSceneContents();
         sceneDetector = new SceneDetector(this);
@@ -82,6 +111,9 @@ public class SceneDetectActivity extends AppCompatActivity implements
         if (null != sceneDetector) {
             sceneDetector.release();
         }
+        if (null != mDisposables) {
+            mDisposables.clear();
+        }
     }
 
     @Override
@@ -95,6 +127,8 @@ public class SceneDetectActivity extends AppCompatActivity implements
     }
 
     public void startAsyncTask() {
+        mDisposables.clear();
+
         Flowable.create(new FlowableOnSubscribe<PhotoItem>() {
 
             @Override
@@ -119,21 +153,11 @@ public class SceneDetectActivity extends AppCompatActivity implements
                         return photoItem;
                     }
                 })
-
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<PhotoItem>() {
+                .subscribe(mSubscriber);
 
-                    @Override
-                    public void accept(PhotoItem photoItem) throws Exception {
-                        String name = photoItem.getPhotoName();
-                        Log.d(TAG, "sceneType: " + sceneType + ", name: " + name);
-                        if (!TextUtils.isEmpty(sceneType) && name.equals(sceneType)) {
-                            mAdapter.addItem(photoItem);
-                        }
-                        // mPhotoView.scrollToPosition(0);
-                    }
-                });
+        mDisposables.add(mSubscriber);
     }
 
 }
