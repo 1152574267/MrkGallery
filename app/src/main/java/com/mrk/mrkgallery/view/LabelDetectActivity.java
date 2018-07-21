@@ -131,6 +131,7 @@ public class LabelDetectActivity extends AppCompatActivity implements
                     public void accept(PhotoItem photoItem) throws Exception {
                         String name = photoItem.getPhotoName();
                         Log.d(TAG, "labelType: " + labelType + ", name: " + name);
+
                         if (!TextUtils.isEmpty(labelType) && name.equals(labelType)) {
                             mAdapter.addItem(photoItem);
                         }
