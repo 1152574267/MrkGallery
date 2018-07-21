@@ -26,9 +26,10 @@ import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 public class LabelDetectActivity extends AppCompatActivity implements
         MRecyclerViewAdapter.OnItemClickListener, MRecyclerViewAdapter.OnItemLongClickListener {
@@ -37,6 +38,8 @@ public class LabelDetectActivity extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
     private LabelDetector labelDetector;
+    private CompositeDisposable mDisposables;
+    private DisposableSubscriber<PhotoItem> mSubscriber;
 
     private String labelType;
 
@@ -49,6 +52,32 @@ public class LabelDetectActivity extends AppCompatActivity implements
         if (intent != null) {
             labelType = intent.getStringExtra("label_type");
         }
+
+        mDisposables = new CompositeDisposable();
+        mSubscriber = new DisposableSubscriber<PhotoItem>() {
+
+            @Override
+            public void onNext(PhotoItem photoItem) {
+                Log.d(TAG, "onNext");
+
+                String name = photoItem.getPhotoName();
+                Log.d(TAG, "labelType: " + labelType + ", name: " + name);
+
+                if (!TextUtils.isEmpty(labelType) && name.equals(labelType)) {
+                    mAdapter.addItem(photoItem);
+                }
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Log.d(TAG, "onError: " + t.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d(TAG, "onComplete");
+            }
+        };
 
         DbHelper.initLabelContents();
         Log.i(TAG, "init LabelDetector");
@@ -85,6 +114,9 @@ public class LabelDetectActivity extends AppCompatActivity implements
         if (null != labelDetector) {
             labelDetector.release();
         }
+        if (null != mDisposables) {
+            mDisposables.clear();
+        }
     }
 
     @Override
@@ -98,6 +130,8 @@ public class LabelDetectActivity extends AppCompatActivity implements
     }
 
     public void startAsyncTask() {
+        mDisposables.clear();
+
         Flowable.create(new FlowableOnSubscribe<PhotoItem>() {
 
             @Override
@@ -125,19 +159,9 @@ public class LabelDetectActivity extends AppCompatActivity implements
                 })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<PhotoItem>() {
+                .subscribe(mSubscriber);
 
-                    @Override
-                    public void accept(PhotoItem photoItem) throws Exception {
-                        String name = photoItem.getPhotoName();
-                        Log.d(TAG, "labelType: " + labelType + ", name: " + name);
-
-                        if (!TextUtils.isEmpty(labelType) && name.equals(labelType)) {
-                            mAdapter.addItem(photoItem);
-                        }
-                        // mPhotoView.scrollToPosition(0);
-                    }
-                });
+        mDisposables.add(mSubscriber);
     }
 
 }
