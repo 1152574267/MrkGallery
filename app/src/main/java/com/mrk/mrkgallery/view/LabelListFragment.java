@@ -1,6 +1,7 @@
 package com.mrk.mrkgallery.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -119,9 +120,9 @@ public class LabelListFragment extends Fragment
     public void onItemClick(int position) {
         Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
-//        Intent intent = new Intent(getActivity(), SceneDetectActivity.class);
-//        intent.putExtra("scene_type", mAdapter.getItem(position).getFileName());
-//        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), LabelDetectActivity.class);
+        intent.putExtra("label_type", mAdapter.getItem(position).getFileName());
+        getActivity().startActivity(intent);
     }
 
     @Override
