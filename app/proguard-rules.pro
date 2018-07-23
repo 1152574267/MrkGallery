@@ -101,3 +101,6 @@
 -keep class * implements android.os.Parcelable {
     public static final android.os.Parcelable$Creator *;
 }
+
+-keep class com.huawei.hiai.vision.** {*;}
+-dontwarn com.huawei.hiai.vision.**
