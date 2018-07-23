@@ -43,7 +43,8 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
 
         if (object instanceof PhotoItem) {
             PhotoItem item = (PhotoItem) object;
-            holder.tv.setText(item.getPhotoName());
+            holder.tv_name.setText(item.getPhotoName());
+            holder.tv_type.setText(item.getPhotoLabel());
 
             int width = ((AppCompatActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();
             ViewGroup.LayoutParams params = holder.img.getLayoutParams();
@@ -103,7 +104,8 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView tv;
+        TextView tv_name;
+        TextView tv_type;
         View itemView;
 
         public ViewHolder(View itemView) {
@@ -111,7 +113,8 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
 
             this.itemView = itemView;
             img = (ImageView) itemView.findViewById(R.id.img);
-            tv = (TextView) itemView.findViewById(R.id.tv);
+            tv_name = (TextView) itemView.findViewById(R.id.tv_name);
+            tv_type = (TextView) itemView.findViewById(R.id.tv_type);
         }
     }
 
