@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -216,6 +217,10 @@ public class DbHelper {
     }
 
     public static String getSceneType(String imgPath, SceneDetector sceneDetector) {
+        if (TextUtils.isEmpty(imgPath) || (sceneDetector == null)) {
+            return SCENE_CONTENTS.get(0);
+        }
+
         Bitmap bmp = BitmapFactory.decodeFile(imgPath);
 
         // 构造Frame对象
@@ -225,13 +230,17 @@ public class DbHelper {
         JSONObject jsonScene = sceneDetector.detect(frame, null);
         // 获取Java类形式的结果
         Scene sc = sceneDetector.convertResult(jsonScene);
-        //获取识别出来的场景类型
+        // 获取识别出来的场景类型
         int type = sc.getType();
 
         return SCENE_CONTENTS.get(type);
     }
 
     public static String getDetectLabel(String imgPath, LabelDetector labelDetector) {
+        if (TextUtils.isEmpty(imgPath) || (labelDetector == null)) {
+            return "not get label";
+        }
+
         long startTime = 0, endTime = 0;
         StringBuffer detectLabel = new StringBuffer();
 
