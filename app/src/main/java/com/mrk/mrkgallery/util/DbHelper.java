@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbHelper {
+    public static final int MODULE_SCENE_DETECT = 0;
+    public static final int MODULE_LABEL_DETECT = 1;
+
     public static final SparseArray<String> LABEL_CONTENTS = new SparseArray<String>();
     public static final SparseArray<String> SCENE_CONTENTS = new SparseArray<String>();
 

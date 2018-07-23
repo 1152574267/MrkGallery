@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.mrk.mrkgallery.R;
 import com.bumptech.glide.Glide;
 import com.mrk.mrkgallery.bean.PhotoItem;
+import com.mrk.mrkgallery.util.DbHelper;
 
 import java.util.List;
 
@@ -21,12 +22,14 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
     private OnItemLongClickListener mItemLongClickListener;
 
     private List<T> mDataList;
+    private int mModuleIndex;
 
-    public MRecyclerViewAdapter(Context context, List<T> dataList) {
+    public MRecyclerViewAdapter(Context context, List<T> dataList, int moduleIndex) {
         super();
 
         mContext = context;
         mDataList = dataList;
+        mModuleIndex = moduleIndex;
     }
 
     @Override
@@ -43,9 +46,14 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
 
         if (object instanceof PhotoItem) {
             PhotoItem item = (PhotoItem) object;
-            holder.tv_name.setText(item.getPhotoName());
-            holder.tv_category.setText(item.getPhotoCategory());
-            holder.tv_type.setText(item.getPhotoLabel());
+            holder.tv_name.setText("name: " + item.getPhotoName());
+            if (mModuleIndex == DbHelper.MODULE_SCENE_DETECT) {
+                holder.tv_category.setText("sceneType: " + item.getPhotoCategory());
+                holder.tv_type.setText(" ");
+            } else if (mModuleIndex == DbHelper.MODULE_LABEL_DETECT) {
+                holder.tv_category.setText("category: " + item.getPhotoCategory());
+                holder.tv_type.setText("labelContent: " + item.getPhotoLabel());
+            }
 
             int width = ((AppCompatActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();
             ViewGroup.LayoutParams params = holder.img.getLayoutParams();
