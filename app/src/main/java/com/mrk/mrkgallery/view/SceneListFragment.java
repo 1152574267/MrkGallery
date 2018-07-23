@@ -30,9 +30,6 @@ public class SceneListFragment extends Fragment
     private RecyclerView mRecyclerView;
     private XRecyclerViewAdapter<FileItem> mAdapter;
 
-//    private boolean isSdCardMounted;
-//    private String mSdCardPath;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -46,8 +43,6 @@ public class SceneListFragment extends Fragment
         Log.d(TAG, "onCreate");
 
         DbHelper.initSceneContents();
-//        isSdCardMounted = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-//        mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     @Nullable
@@ -84,7 +79,6 @@ public class SceneListFragment extends Fragment
             item.setFileName(DbHelper.SCENE_CONTENTS.get(i));
             mFileList.add(item);
         }
-
         mAdapter = new XRecyclerViewAdapter<FileItem>(mContext, mFileList);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -118,17 +112,19 @@ public class SceneListFragment extends Fragment
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getActivity(), SceneDetectActivity.class);
-        intent.putExtra("scene_type", mAdapter.getItem(position).getFileName());
+        if (mAdapter != null) {
+            intent.putExtra("scene_type", mAdapter.getItem(position).getFileName());
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }
 
     @Override
     public void onItemLongClick(int position) {
-        Toast.makeText(mContext, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
     }
 
 }
