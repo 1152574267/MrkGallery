@@ -58,12 +58,10 @@ public class LabelDetectActivity extends AppCompatActivity implements
 
             @Override
             public void onNext(PhotoItem photoItem) {
-                Log.d(TAG, "onNext");
-
                 String category = photoItem.getPhotoCategory();
-                Log.d(TAG, "labelType: " + labelType + ", category: " + category);
+                Log.d(TAG, "onNext - labelType: " + labelType + ", category: " + category);
 
-                if (!TextUtils.isEmpty(labelType) && category.equals(labelType)) {
+                if (!TextUtils.isEmpty(labelType) && !TextUtils.isEmpty(category) && category.equals(labelType)) {
                     mAdapter.addItem(photoItem);
                 }
             }
@@ -80,10 +78,8 @@ public class LabelDetectActivity extends AppCompatActivity implements
         };
 
         DbHelper.initLabelContents();
-        Log.i(TAG, "init LabelDetector");
         // 定义detector实例，将此工程的Context当做入参
         labelDetector = new LabelDetector(this);
-        Log.i(TAG, "start to get label");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.tablist);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
@@ -121,12 +117,12 @@ public class LabelDetectActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemLongClick(int position) {
-        Toast.makeText(this, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
     }
 
     public void startAsyncTask() {
@@ -162,7 +158,6 @@ public class LabelDetectActivity extends AppCompatActivity implements
                         } else {
                             photoItem.setPhotoCategory(detectLabel);
                         }
-
                         /********************** 图片分类检测************************/
 
                         return photoItem;
