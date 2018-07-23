@@ -30,9 +30,6 @@ public class LabelListFragment extends Fragment
     private RecyclerView mRecyclerView;
     private XRecyclerViewAdapter<FileItem> mAdapter;
 
-//    private boolean isSdCardMounted;
-//    private String mSdCardPath;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -46,8 +43,6 @@ public class LabelListFragment extends Fragment
         Log.d(TAG, "onCreate");
 
         DbHelper.initLabelContents();
-//        isSdCardMounted = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-//        mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     @Nullable
@@ -84,7 +79,6 @@ public class LabelListFragment extends Fragment
             item.setFileName(DbHelper.LABEL_CATEGORYS[i]);
             mFileList.add(item);
         }
-
         mAdapter = new XRecyclerViewAdapter<FileItem>(mContext, mFileList);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -118,17 +112,19 @@ public class LabelListFragment extends Fragment
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getActivity(), LabelDetectActivity.class);
-        intent.putExtra("label_type", mAdapter.getItem(position).getFileName());
+        if (mAdapter != null) {
+            intent.putExtra("label_type", mAdapter.getItem(position).getFileName());
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }
 
     @Override
     public void onItemLongClick(int position) {
-        Toast.makeText(mContext, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
     }
 
 }
