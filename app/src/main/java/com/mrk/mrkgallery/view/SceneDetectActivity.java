@@ -58,11 +58,9 @@ public class SceneDetectActivity extends AppCompatActivity implements
 
             @Override
             public void onNext(PhotoItem photoItem) {
-                Log.d(TAG, "onNext");
-
                 String category = photoItem.getPhotoCategory();
-                Log.d(TAG, "sceneType: " + sceneType + ", category: " + category);
-                if (!TextUtils.isEmpty(sceneType) && category.equals(sceneType)) {
+                Log.d(TAG, "onNext - sceneType: " + sceneType + ", category: " + category);
+                if (!TextUtils.isEmpty(sceneType) && !TextUtils.isEmpty(category) && category.equals(sceneType)) {
                     mAdapter.addItem(photoItem);
                 }
                 // mPhotoView.scrollToPosition(0);
@@ -118,12 +116,12 @@ public class SceneDetectActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(this, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemLongClick(int position) {
-        Toast.makeText(this, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onItemLongClick: " + position, Toast.LENGTH_SHORT).show();
     }
 
     public void startAsyncTask() {
