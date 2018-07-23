@@ -54,7 +54,7 @@ public class SceneDetectFragment extends Fragment implements
         Log.d(TAG, "onCreate");
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(mContext, photoList);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(mContext, photoList, DbHelper.MODULE_SCENE_DETECT);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
 
