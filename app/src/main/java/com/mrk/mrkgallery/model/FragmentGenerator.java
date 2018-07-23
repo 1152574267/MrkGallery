@@ -11,7 +11,7 @@ import java.util.List;
 
 public class FragmentGenerator {
     public static int[] strArr = new int[]{R.string.tv_image_scene_detect, R.string.tv_image_label_detect};
-    public static int[] drawableArr = new int[]{R.drawable.ic_launcher, R.drawable.ic_launcher};
+    public static int[] drawableArr = new int[]{R.drawable.img_tab_icon, R.drawable.img_tab_icon};
 
     public static List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<Fragment>();
