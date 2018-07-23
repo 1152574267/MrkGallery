@@ -31,6 +31,24 @@
             android:paddingTop="10dp">
 
             <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text=" "
+                android:textColor="@android:color/black"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="Category"
+                android:textColor="@android:color/black"
+                android:textSize="10sp" />
+
+            <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,16 +56,8 @@
                 android:text="Name"
                 android:textColor="@android:color/black"
                 android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/tv_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="Type"
-                android:textColor="@android:color/black"
-                android:textSize="10sp" />
         </LinearLayout>
+
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

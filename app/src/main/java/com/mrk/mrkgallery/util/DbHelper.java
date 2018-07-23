@@ -255,17 +255,19 @@ public class DbHelper {
                 detectLabel.append(LABEL_CATEGORYS[categoryID]);
             }
 
-//            List<LabelContent> labelContents = result_label.getLabelContent();
-//            for (LabelContent labelContent : labelContents) {
+            List<LabelContent> labelContents = result_label.getLabelContent();
+            for (int i = 0; i < labelContents.size(); i++) {
 //                detectLabel.append(" labelContent: ");
-//                int labelContentID = labelContent.getLabelId();
-//                String name = LABEL_CONTENTS.get(labelContentID);
-//                if (name == null) {
-//                    detectLabel.append("other");
-//                } else {
-//                    detectLabel.append(name);
-//                }
-//            }
+                detectLabel.append("-");
+                int labelContentID = labelContents.get(i).getLabelId();
+                Log.i("getDetectLabel", "labelContentID: " + labelContentID);
+                if (labelContentID < 0 || labelContentID >= LABEL_CONTENTS.size()) {
+                    detectLabel.append("other");
+                } else {
+                    String name = LABEL_CONTENTS.get(labelContentID);
+                    detectLabel.append(name);
+                }
+            }
         }
 
         return detectLabel.toString().trim();

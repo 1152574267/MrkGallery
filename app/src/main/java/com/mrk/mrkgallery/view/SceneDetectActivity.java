@@ -60,9 +60,9 @@ public class SceneDetectActivity extends AppCompatActivity implements
             public void onNext(PhotoItem photoItem) {
                 Log.d(TAG, "onNext");
 
-                String label = photoItem.getPhotoLabel();
-                Log.d(TAG, "sceneType: " + sceneType + ", label: " + label);
-                if (!TextUtils.isEmpty(sceneType) && label.equals(sceneType)) {
+                String category = photoItem.getPhotoCategory();
+                Log.d(TAG, "sceneType: " + sceneType + ", category: " + category);
+                if (!TextUtils.isEmpty(sceneType) && category.equals(sceneType)) {
                     mAdapter.addItem(photoItem);
                 }
                 // mPhotoView.scrollToPosition(0);
@@ -147,7 +147,7 @@ public class SceneDetectActivity extends AppCompatActivity implements
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** 场景检测 ***************************/
                         String sceneType = DbHelper.getSceneType(photoItem.getPhotoPath(), sceneDetector);
-                        photoItem.setPhotoLabel(sceneType);
+                        photoItem.setPhotoCategory(sceneType);
                         /********************** 场景检测 ***************************/
 
                         return photoItem;

@@ -60,10 +60,10 @@ public class LabelDetectActivity extends AppCompatActivity implements
             public void onNext(PhotoItem photoItem) {
                 Log.d(TAG, "onNext");
 
-                String name = photoItem.getPhotoName();
-                Log.d(TAG, "labelType: " + labelType + ", name: " + name);
+                String category = photoItem.getPhotoCategory();
+                Log.d(TAG, "labelType: " + labelType + ", category: " + category);
 
-                if (!TextUtils.isEmpty(labelType) && name.equals(labelType)) {
+                if (!TextUtils.isEmpty(labelType) && category.equals(labelType)) {
                     mAdapter.addItem(photoItem);
                 }
             }
@@ -151,7 +151,18 @@ public class LabelDetectActivity extends AppCompatActivity implements
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** 图片分类检测 ***********************/
                         String detectLabel = DbHelper.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
-                        photoItem.setPhotoName(detectLabel);
+
+                        boolean isContainlabel = detectLabel.contains("-");
+                        if (isContainlabel) {
+                            int i = detectLabel.indexOf("-");
+                            String category = detectLabel.substring(0, i);
+                            String label = detectLabel.substring(i+1);
+                            photoItem.setPhotoCategory(category);
+                            photoItem.setPhotoLabel(label);
+                        } else {
+                            photoItem.setPhotoCategory(detectLabel);
+                        }
+
                         /********************** 图片分类检测************************/
 
                         return photoItem;
