@@ -90,7 +90,7 @@ public class SceneDetectActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_SCENE_DETECT);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);

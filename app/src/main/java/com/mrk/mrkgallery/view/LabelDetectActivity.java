@@ -93,7 +93,7 @@ public class LabelDetectActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_LABEL_DETECT);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
@@ -156,7 +156,7 @@ public class LabelDetectActivity extends AppCompatActivity implements
                         if (isContainlabel) {
                             int i = detectLabel.indexOf("-");
                             String category = detectLabel.substring(0, i);
-                            String label = detectLabel.substring(i+1);
+                            String label = detectLabel.substring(i + 1);
                             photoItem.setPhotoCategory(category);
                             photoItem.setPhotoLabel(label);
                         } else {
