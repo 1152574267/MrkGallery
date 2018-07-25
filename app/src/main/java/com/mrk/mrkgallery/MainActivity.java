@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mViewPager = (ViewPager) findViewById(R.id.tab_viewpager);
 
         fpa = new XFragmentPagerAdapter(getSupportFragmentManager());
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(fpa);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.addOnTabSelectedListener(this);
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private void initData() {
         mTabLayout.removeAllTabs();
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             mTabLayout.addTab(mTabLayout.newTab().setIcon(FragmentGenerator.drawableArr[i]).setText(FragmentGenerator.strArr[i]));
         }
     }
