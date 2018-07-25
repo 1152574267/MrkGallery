@@ -1,12 +1,10 @@
 package com.mrk.mrkgallery.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,17 +40,10 @@ public class TFDetectActivity extends AppCompatActivity implements
     private CompositeDisposable mDisposables;
     private DisposableSubscriber<PhotoItem> mSubscriber;
 
-    private String labelType;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_photo);
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            labelType = intent.getStringExtra("label_type");
-        }
 
         mDisposables = new CompositeDisposable();
         mSubscriber = new DisposableSubscriber<PhotoItem>() {
@@ -60,11 +51,11 @@ public class TFDetectActivity extends AppCompatActivity implements
             @Override
             public void onNext(PhotoItem photoItem) {
                 String category = photoItem.getPhotoCategory();
-                Log.d(TAG, "onNext - labelType: " + labelType + ", category: " + category);
+                Log.d(TAG, "onNext - category: " + category);
 
-                //if (!TextUtils.isEmpty(labelType) && !TextUtils.isEmpty(category) && category.equals(labelType)) {
-                mAdapter.addItem(photoItem);
-                //}
+                if (mAdapter != null) {
+                    mAdapter.addItem(photoItem);
+                }
             }
 
             @Override
@@ -78,7 +69,6 @@ public class TFDetectActivity extends AppCompatActivity implements
             }
         };
 
-        DbHelper.initLabelContents();
         mClassifier = TensorFlowImageClassifier.create(getAssets(),
                 DbHelper.MODEL_FILE,
                 DbHelper.LABEL_FILE,
@@ -153,9 +143,9 @@ public class TFDetectActivity extends AppCompatActivity implements
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** TF图像识别分类 ***********************/
-                        String detectTfType = DbHelper.startImageClassifier(photoItem.getPhotoPath(), mClassifier);
-                        photoItem.setPhotoCategory(detectTfType);
-                        /********************** 图片分类检测************************/
+                        String tfType = DbHelper.startImageClassifier(photoItem.getPhotoPath(), mClassifier);
+                        photoItem.setPhotoCategory(tfType);
+                        /********************** TF图像识别分类 ************************/
 
                         return photoItem;
                     }
