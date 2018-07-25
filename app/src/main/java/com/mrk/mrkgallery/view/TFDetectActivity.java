@@ -37,7 +37,6 @@ public class TFDetectActivity extends AppCompatActivity implements
 
     private RecyclerView mRecyclerView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
-    private LabelDetector labelDetector;
     private CompositeDisposable mDisposables;
     private DisposableSubscriber<PhotoItem> mSubscriber;
 
@@ -61,9 +60,9 @@ public class TFDetectActivity extends AppCompatActivity implements
                 String category = photoItem.getPhotoCategory();
                 Log.d(TAG, "onNext - labelType: " + labelType + ", category: " + category);
 
-                if (!TextUtils.isEmpty(labelType) && !TextUtils.isEmpty(category) && category.equals(labelType)) {
+                //if (!TextUtils.isEmpty(labelType) && !TextUtils.isEmpty(category) && category.equals(labelType)) {
                     mAdapter.addItem(photoItem);
-                }
+                //}
             }
 
             @Override
@@ -78,8 +77,6 @@ public class TFDetectActivity extends AppCompatActivity implements
         };
 
         DbHelper.initLabelContents();
-        // 定义detector实例，将此工程的Context当做入参
-        labelDetector = new LabelDetector(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.tablist);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
@@ -89,7 +86,7 @@ public class TFDetectActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_LABEL_DETECT);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_SCENE_DETECT);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
@@ -107,9 +104,6 @@ public class TFDetectActivity extends AppCompatActivity implements
         super.onDestroy();
         Log.d(TAG, "onDestroy");
 
-        if (null != labelDetector) {
-            labelDetector.release();
-        }
         if (null != mDisposables) {
             mDisposables.clear();
         }

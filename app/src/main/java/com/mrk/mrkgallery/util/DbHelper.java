@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -16,6 +17,7 @@ import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;
 import com.huawei.hiai.vision.visionkit.image.detector.Scene;           //加载场景检测结果类
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.model.MediaDataGenerator;
+import com.mrk.mrkgallery.tfai.Classifier;
 
 import org.json.JSONObject;
 
@@ -25,6 +27,13 @@ import java.util.List;
 public class DbHelper {
     public static final int MODULE_SCENE_DETECT = 0;
     public static final int MODULE_LABEL_DETECT = 1;
+    public static final int INPUT_SIZE = 224;
+    public static final int IMAGE_MEAN = 117;
+    public static final float IMAGE_STD = 1;
+    public static final String INPUT_NAME = "input";
+    public static final String OUTPUT_NAME = "output";
+    public static final String MODEL_FILE = "file:///android_asset/model/tensorflow_inception_graph.pb";
+    public static final String LABEL_FILE = "file:///android_asset/model/imagenet_comp_graph_label_strings.txt";
 
     public static final SparseArray<String> LABEL_CONTENTS = new SparseArray<String>();
     public static final SparseArray<String> SCENE_CONTENTS = new SparseArray<String>();
@@ -325,6 +334,36 @@ public class DbHelper {
         }
 
         return label;
+    }
+
+    /**
+     * 开始图片识别匹配
+     */
+    public static String startImageClassifier(String imgPath, Classifier classifier) {
+        if (TextUtils.isEmpty(imgPath) || (classifier == null)) {
+            return "1233";
+        }
+
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+        Bitmap croppedBitmap = getScaleBitmap(bitmap, INPUT_SIZE);
+        final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap);
+        Log.i("startImageClassifier", "startImageClassifier results: " + results);
+
+        return String.format("results: %s", results);
+    }
+
+    /**
+     * 对图片进行缩放
+     */
+    public static Bitmap getScaleBitmap(Bitmap bitmap, int size) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        float scaleWidth = ((float) size) / width;
+        float scaleHeight = ((float) size) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
     }
 
 }

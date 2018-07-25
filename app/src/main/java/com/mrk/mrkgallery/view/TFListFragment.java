@@ -114,12 +114,12 @@ public class TFListFragment extends Fragment
     public void onItemClick(int position) {
 //        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
-//        Intent intent = new Intent(getActivity(), LabelDetectActivity.class);
-//        if (mAdapter != null) {
-//            intent.putExtra("label_type", mAdapter.getItem(position).getFileName());
-//        }
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), TFDetectActivity.class);
+        if (mAdapter != null) {
+            intent.putExtra("label_type", mAdapter.getItem(position).getFileName());
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
     }
 
     @Override
