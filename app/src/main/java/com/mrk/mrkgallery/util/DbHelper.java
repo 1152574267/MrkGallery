@@ -27,6 +27,7 @@ import java.util.List;
 public class DbHelper {
     public static final int MODULE_SCENE_DETECT = 0;
     public static final int MODULE_LABEL_DETECT = 1;
+    public static final int MODULE_TF_DETECT = 2;
     public static final int INPUT_SIZE = 224;
     public static final int IMAGE_MEAN = 117;
     public static final float IMAGE_STD = 1;

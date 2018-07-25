@@ -53,6 +53,9 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
             } else if (mModuleIndex == DbHelper.MODULE_LABEL_DETECT) {
                 holder.tv_category.setText("category: " + item.getPhotoCategory());
                 holder.tv_type.setText("labelContent: " + item.getPhotoLabel());
+            } else if (mModuleIndex == DbHelper.MODULE_TF_DETECT) {
+                holder.tv_category.setText("tfType: " + item.getPhotoCategory());
+                holder.tv_type.setText(" ");
             }
 
             int width = ((AppCompatActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();

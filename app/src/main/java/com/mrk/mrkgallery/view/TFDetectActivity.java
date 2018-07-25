@@ -96,7 +96,7 @@ public class TFDetectActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_SCENE_DETECT);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_TF_DETECT);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
@@ -153,8 +153,8 @@ public class TFDetectActivity extends AppCompatActivity implements
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** TF图像识别分类 ***********************/
-                        String detectLabel = DbHelper.startImageClassifier(photoItem.getPhotoPath(), mClassifier);
-                        photoItem.setPhotoCategory(detectLabel);
+                        String detectTfType = DbHelper.startImageClassifier(photoItem.getPhotoPath(), mClassifier);
+                        photoItem.setPhotoCategory(detectTfType);
                         /********************** 图片分类检测************************/
 
                         return photoItem;
