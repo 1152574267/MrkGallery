@@ -350,7 +350,7 @@ public class DbHelper {
         final List<Classifier.Recognition> results = classifier.recognizeImage(croppedBitmap);
         Log.i("startImageClassifier", "startImageClassifier results: " + results);
 
-        return String.format("results: %s", results);
+        return String.format("%s", results.get(0));
     }
 
     /**
