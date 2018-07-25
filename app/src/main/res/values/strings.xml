@@ -2,5 +2,5 @@
     <string name="app_name">AI智能相册</string>
     <string name="tv_image_scene_detect">场景检测</string>
     <string name="tv_image_label_detect">图片分类标签</string>
-    <string name="tv_image_tf_detect">tensorflow图像识别</string>
+    <string name="tv_image_tf_detect">TF图像识别</string>
 </resources>
