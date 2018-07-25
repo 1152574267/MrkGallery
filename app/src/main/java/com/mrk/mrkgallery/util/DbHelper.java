@@ -342,7 +342,7 @@ public class DbHelper {
      */
     public static String startImageClassifier(String imgPath, Classifier classifier) {
         if (TextUtils.isEmpty(imgPath) || (classifier == null)) {
-            return "1233";
+            return "no tf type";
         }
 
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
