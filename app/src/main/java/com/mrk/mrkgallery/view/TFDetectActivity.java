@@ -10,11 +10,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.huawei.hiai.vision.image.detector.LabelDetector;
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
+import com.mrk.mrkgallery.tfai.Classifier;
+import com.mrk.mrkgallery.tfai.TensorFlowImageClassifier;
 import com.mrk.mrkgallery.util.DbHelper;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class TFDetectActivity extends AppCompatActivity implements
 
     private RecyclerView mRecyclerView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
+    private Classifier mClassifier;
     private CompositeDisposable mDisposables;
     private DisposableSubscriber<PhotoItem> mSubscriber;
 
@@ -61,7 +63,7 @@ public class TFDetectActivity extends AppCompatActivity implements
                 Log.d(TAG, "onNext - labelType: " + labelType + ", category: " + category);
 
                 //if (!TextUtils.isEmpty(labelType) && !TextUtils.isEmpty(category) && category.equals(labelType)) {
-                    mAdapter.addItem(photoItem);
+                mAdapter.addItem(photoItem);
                 //}
             }
 
@@ -77,6 +79,14 @@ public class TFDetectActivity extends AppCompatActivity implements
         };
 
         DbHelper.initLabelContents();
+        mClassifier = TensorFlowImageClassifier.create(getAssets(),
+                DbHelper.MODEL_FILE,
+                DbHelper.LABEL_FILE,
+                DbHelper.INPUT_SIZE,
+                DbHelper.IMAGE_MEAN,
+                DbHelper.IMAGE_STD,
+                DbHelper.INPUT_NAME,
+                DbHelper.OUTPUT_NAME);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.tablist);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
@@ -104,6 +114,9 @@ public class TFDetectActivity extends AppCompatActivity implements
         super.onDestroy();
         Log.d(TAG, "onDestroy");
 
+        if (null != mClassifier) {
+            mClassifier.close();
+        }
         if (null != mDisposables) {
             mDisposables.clear();
         }
@@ -139,19 +152,9 @@ public class TFDetectActivity extends AppCompatActivity implements
 
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
-                        /********************** 图片分类检测 ***********************/
-                        String detectLabel = DbHelper.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
-
-                        boolean isContainlabel = detectLabel.contains("-");
-                        if (isContainlabel) {
-                            int i = detectLabel.indexOf("-");
-                            String category = detectLabel.substring(0, i);
-                            String label = detectLabel.substring(i + 1);
-                            photoItem.setPhotoCategory(category);
-                            photoItem.setPhotoLabel(label);
-                        } else {
-                            photoItem.setPhotoCategory(detectLabel);
-                        }
+                        /********************** TF图像识别分类 ***********************/
+                        String detectLabel = DbHelper.startImageClassifier(photoItem.getPhotoPath(), mClassifier);
+                        photoItem.setPhotoCategory(detectLabel);
                         /********************** 图片分类检测************************/
 
                         return photoItem;
