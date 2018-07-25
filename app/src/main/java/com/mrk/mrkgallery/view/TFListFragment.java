@@ -17,7 +17,6 @@ import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.XRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.FileItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
-import com.mrk.mrkgallery.util.DbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +40,6 @@ public class TFListFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-
-        DbHelper.initLabelContents();
     }
 
     @Nullable
@@ -74,11 +71,10 @@ public class TFListFragment extends Fragment
 
         List<FileItem> mFileList = new ArrayList<FileItem>();
         mFileList.clear();
-        for (int i = 0; i < DbHelper.LABEL_CATEGORYS.length; i++) {
-            FileItem item = new FileItem();
-            item.setFileName(DbHelper.LABEL_CATEGORYS[i]);
-            mFileList.add(item);
-        }
+        FileItem item = new FileItem();
+        item.setFileName("imagenet");
+        mFileList.add(item);
+
         mAdapter = new XRecyclerViewAdapter<FileItem>(mContext, mFileList);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
@@ -115,9 +111,6 @@ public class TFListFragment extends Fragment
 //        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(getActivity(), TFDetectActivity.class);
-        if (mAdapter != null) {
-            intent.putExtra("label_type", mAdapter.getItem(position).getFileName());
-        }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }
