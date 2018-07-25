@@ -15,7 +15,16 @@ android {
                 cppFlags "-std=c++11 -frtti -fexceptions"
             }
         }
+        jackOptions{
+            enabled = true
+        }
     }
+
+    compileOptions{
+        sourceCompatibility = 1.7
+        targetCompatibility = 1.7
+    }
+
     buildTypes {
         release {
             minifyEnabled true

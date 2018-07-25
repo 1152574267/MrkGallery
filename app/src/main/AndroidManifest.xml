@@ -23,6 +23,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".view.SceneDetectActivity" />
         <activity android:name=".view.LabelDetectActivity" />
+        <activity android:name=".view.TFDetectActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
