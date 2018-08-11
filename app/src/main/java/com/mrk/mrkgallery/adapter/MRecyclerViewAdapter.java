@@ -56,6 +56,9 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
             } else if (mModuleIndex == DbHelper.MODULE_TF_DETECT) {
                 holder.tv_category.setText("tfType: " + item.getPhotoCategory());
                 holder.tv_type.setText(" ");
+            } else if (mModuleIndex == DbHelper.MODULE_MNIST_DETECT) {
+                holder.tv_category.setText("mnistType: " + item.getPhotoCategory());
+                holder.tv_type.setText(" ");
             }
 
             int width = ((AppCompatActivity) mContext).getWindowManager().getDefaultDisplay().getWidth();
@@ -64,7 +67,11 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
             params.width = width / 2;
             params.height = (int) (200 + Math.random() * 400);
             holder.img.setLayoutParams(params);
-            Glide.with(mContext).load(item.getPhotoPath()).into(holder.img);
+            if (mModuleIndex == DbHelper.MODULE_MNIST_DETECT) {
+                holder.img.setImageResource(item.getPhotoResId());
+            } else {
+                Glide.with(mContext).load(item.getPhotoPath()).into(holder.img);
+            }
         }
 
         final int index = position;
