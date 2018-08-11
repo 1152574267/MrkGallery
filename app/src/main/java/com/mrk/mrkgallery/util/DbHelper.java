@@ -35,6 +35,7 @@ public class DbHelper {
     public static final String OUTPUT_NAME = "output";
     public static final String MODEL_FILE = "file:///android_asset/model/tensorflow_inception_graph.pb";
     public static final String LABEL_FILE = "file:///android_asset/model/imagenet_comp_graph_label_strings.txt";
+    public static final String MNIST_MODEL_FILE = "file:///android_asset/model/mnist.pb";
 
     public static final SparseArray<String> LABEL_CONTENTS = new SparseArray<String>();
     public static final SparseArray<String> SCENE_CONTENTS = new SparseArray<String>();
