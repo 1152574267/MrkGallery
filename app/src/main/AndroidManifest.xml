@@ -24,6 +24,7 @@
         <activity android:name=".view.SceneDetectActivity" />
         <activity android:name=".view.LabelDetectActivity" />
         <activity android:name=".view.TFDetectActivity" />
+        <activity android:name=".view.MnistDetectActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
