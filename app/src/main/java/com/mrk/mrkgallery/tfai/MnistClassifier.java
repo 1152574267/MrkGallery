@@ -19,6 +19,7 @@ public class MnistClassifier {
 
     // 模型中输入变量的名称
     private static final String inputNodeName = "input";
+    private static final String keepProbNodeName = "rob";
     // 用于存储的模型输入数据
     private float[] inputs = new float[HEIGHT * WIDTH];
     // 模型中输出变量的名称
@@ -147,6 +148,7 @@ public class MnistClassifier {
         //输入图像到模型中
         Trace.beginSection("feed");
         inferenceInterface.feed(inputNodeName, ints2float(pxs, 784), 1, 784);
+        inferenceInterface.feed(keepProbNodeName, new float[]{1.0f});
         Trace.endSection();
 
         //获得模型输出结果
