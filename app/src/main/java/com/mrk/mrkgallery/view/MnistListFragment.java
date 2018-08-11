@@ -111,9 +111,9 @@ public class MnistListFragment extends Fragment
     public void onItemClick(int position) {
 //        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
-//        Intent intent = new Intent(getActivity(), SceneDetectActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        getActivity().startActivity(intent);
+        Intent intent = new Intent(getActivity(), MnistDetectActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
     }
 
     @Override

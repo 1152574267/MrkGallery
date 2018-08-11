@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
         mViewPager = (ViewPager) findViewById(R.id.tab_viewpager);
 
         fpa = new XFragmentPagerAdapter(getSupportFragmentManager());
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(fpa);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.addOnTabSelectedListener(this);
