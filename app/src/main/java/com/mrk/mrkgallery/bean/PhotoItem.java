@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class PhotoItem implements Serializable {
     private String mPhotoPath;
     private String mPhotoName;
+    private int mPhotoResId;
     private String mPhotoCategory;
     private String mPhotoLabel;
 
@@ -22,6 +23,14 @@ public class PhotoItem implements Serializable {
 
     public String getPhotoPath() {
         return mPhotoPath;
+    }
+
+    public void setPhotoResId(int photoResId) {
+        mPhotoResId = photoResId;
+    }
+
+    public int getPhotoResId() {
+        return mPhotoResId;
     }
 
     public void setPhotoCategory(String category) {

@@ -15,9 +15,11 @@ import com.huawei.hiai.vision.visionkit.common.Frame;                   //加载
 import com.huawei.hiai.vision.visionkit.image.detector.Label;
 import com.huawei.hiai.vision.visionkit.image.detector.LabelContent;
 import com.huawei.hiai.vision.visionkit.image.detector.Scene;           //加载场景检测结果类
+import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.model.MediaDataGenerator;
 import com.mrk.mrkgallery.tfai.Classifier;
+import com.mrk.mrkgallery.tfai.MnistClassifier;
 
 import org.json.JSONObject;
 
@@ -371,6 +373,47 @@ public class DbHelper {
         matrix.postScale(scaleWidth, scaleHeight);
 
         return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+    }
+
+    /**
+     * 开始手写数字图片识别匹配
+     */
+    public static String startMnistClassifier(String imgPath, MnistClassifier classifier) {
+        if (TextUtils.isEmpty(imgPath) || (classifier == null)) {
+            return "no mnist type";
+        }
+
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+//        classifier.getGrayPix_R(bitmap, true);
+        int mnistType = classifier.getPredictResult(bitmap);
+        return String.valueOf(mnistType);
+    }
+
+    public static List<PhotoItem> getMnistPhotoList() {
+        int photoResId[] = {
+                R.drawable.num_0,
+                R.drawable.num_1,
+                R.drawable.num_2,
+                R.drawable.num_3,
+                R.drawable.num_4,
+                R.drawable.num_5,
+                R.drawable.num_6,
+                R.drawable.num_7,
+                R.drawable.num_8,
+                R.drawable.num_9
+        };
+
+        List<PhotoItem> photoList = new ArrayList<PhotoItem>();
+        photoList.clear();
+
+        for (int i = 0; i < photoResId.length; i++) {
+            PhotoItem item = new PhotoItem();
+            item.setPhotoName(i + ".png");
+            item.setPhotoResId(photoResId[i]);
+            photoList.add(item);
+        }
+
+        return photoList;
     }
 
 }

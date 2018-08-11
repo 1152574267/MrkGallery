@@ -28,7 +28,7 @@ public class MnistClassifier {
 
     private TensorFlowInferenceInterface inferenceInterface;
 
-    MnistClassifier(AssetManager assetManager) {
+    public MnistClassifier(AssetManager assetManager) {
         inferenceInterface = new TensorFlowInferenceInterface(assetManager, DbHelper.MNIST_MODEL_FILE);
     }
 
