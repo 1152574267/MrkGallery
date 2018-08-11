@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private void initData() {
         mTabLayout.removeAllTabs();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             mTabLayout.addTab(mTabLayout.newTab().setIcon(FragmentGenerator.drawableArr[i]).setText(FragmentGenerator.strArr[i]));
         }
     }
