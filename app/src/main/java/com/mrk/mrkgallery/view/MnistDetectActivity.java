@@ -137,7 +137,7 @@ public class MnistDetectActivity extends AppCompatActivity implements
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** 手写数字图像识别 ***********************/
-                        String mnistType = DbHelper.startMnistClassifier(photoItem.getPhotoPath(), mClassifier);
+                        String mnistType = DbHelper.startMnistClassifier(photoItem.getPhotoResId(), mClassifier);
                         photoItem.setPhotoCategory(mnistType);
                         /********************** 手写数字图像识别 ************************/
 

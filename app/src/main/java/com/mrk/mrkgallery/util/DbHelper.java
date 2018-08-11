@@ -62,6 +62,19 @@ public class DbHelper {
             "Toy"
     };
 
+    public static final int mnistResId[] = {
+            R.drawable.num_0,
+            R.drawable.num_1,
+            R.drawable.num_2,
+            R.drawable.num_3,
+            R.drawable.num_4,
+            R.drawable.num_5,
+            R.drawable.num_6,
+            R.drawable.num_7,
+            R.drawable.num_8,
+            R.drawable.num_9
+    };
+
     public static void initLabelContents() {
         LABEL_CONTENTS.clear();
 
@@ -376,40 +389,27 @@ public class DbHelper {
     }
 
     /**
-     * 开始手写数字图片识别匹配
+     * 开始手写数字图片识别
      */
-    public static String startMnistClassifier(String imgPath, MnistClassifier classifier) {
-        if (TextUtils.isEmpty(imgPath) || (classifier == null)) {
+    public static String startMnistClassifier(Context context, int imgResId, MnistClassifier classifier) {
+        if (classifier == null) {
             return "no mnist type";
         }
 
-        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), imgResId);
 //        classifier.getGrayPix_R(bitmap, true);
         int mnistType = classifier.getPredictResult(bitmap);
         return String.valueOf(mnistType);
     }
 
     public static List<PhotoItem> getMnistPhotoList() {
-        int photoResId[] = {
-                R.drawable.num_0,
-                R.drawable.num_1,
-                R.drawable.num_2,
-                R.drawable.num_3,
-                R.drawable.num_4,
-                R.drawable.num_5,
-                R.drawable.num_6,
-                R.drawable.num_7,
-                R.drawable.num_8,
-                R.drawable.num_9
-        };
-
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
         photoList.clear();
 
-        for (int i = 0; i < photoResId.length; i++) {
+        for (int i = 0; i < mnistResId.length; i++) {
             PhotoItem item = new PhotoItem();
             item.setPhotoName(i + ".png");
-            item.setPhotoResId(photoResId[i]);
+            item.setPhotoResId(mnistResId[i]);
             photoList.add(item);
         }
 
