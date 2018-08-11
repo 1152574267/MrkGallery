@@ -12,9 +12,7 @@ import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
-import com.mrk.mrkgallery.tfai.Classifier;
 import com.mrk.mrkgallery.tfai.MnistClassifier;
-import com.mrk.mrkgallery.tfai.TensorFlowImageClassifier;
 import com.mrk.mrkgallery.util.DbHelper;
 
 import java.util.ArrayList;
@@ -131,13 +129,12 @@ public class MnistDetectActivity extends AppCompatActivity implements
                 }
             }
         }, BackpressureStrategy.BUFFER)
-                //.delay(1, TimeUnit.SECONDS)
                 .map(new Function<PhotoItem, PhotoItem>() {
 
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** 手写数字图像识别 ***********************/
-                        String mnistType = DbHelper.startMnistClassifier(photoItem.getPhotoResId(), mClassifier);
+                        String mnistType = DbHelper.startMnistClassifier(MnistDetectActivity.this, photoItem.getPhotoResId(), mClassifier);
                         photoItem.setPhotoCategory(mnistType);
                         /********************** 手写数字图像识别 ************************/
 
