@@ -16,6 +16,7 @@ import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
 import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.HiAIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class LabelDetectActivity extends AppCompatActivity implements
             }
         };
 
-        DbHelper.initLabelContents();
+        HiAIUtil.initLabelContents();
         // 定义detector实例，将此工程的Context当做入参
         labelDetector = new LabelDetector(this);
 
@@ -146,7 +147,7 @@ public class LabelDetectActivity extends AppCompatActivity implements
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** 图片分类检测 ***********************/
-                        String detectLabel = DbHelper.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
+                        String detectLabel = HiAIUtil.getDetectLabel(photoItem.getPhotoPath(), labelDetector);
 
                         boolean isContainlabel = detectLabel.contains("-");
                         if (isContainlabel) {

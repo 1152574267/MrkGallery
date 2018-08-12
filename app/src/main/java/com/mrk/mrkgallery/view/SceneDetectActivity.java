@@ -16,6 +16,7 @@ import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
 import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.HiAIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class SceneDetectActivity extends AppCompatActivity implements
             }
         };
 
-        DbHelper.initSceneContents();
+        HiAIUtil.initSceneContents();
         sceneDetector = new SceneDetector(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.tablist);
@@ -144,7 +145,7 @@ public class SceneDetectActivity extends AppCompatActivity implements
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** 场景检测 ***************************/
-                        String sceneType = DbHelper.getSceneType(photoItem.getPhotoPath(), sceneDetector);
+                        String sceneType = HiAIUtil.getSceneType(photoItem.getPhotoPath(), sceneDetector);
                         photoItem.setPhotoCategory(sceneType);
                         /********************** 场景检测 ***************************/
 
