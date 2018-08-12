@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
+import com.mrk.mrkgallery.util.DbHelper;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout mSceneDetect;
@@ -44,15 +45,17 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.ll_home_scene_detect:
                 intent.setClass(this, MainActivity.class);
+                intent.putExtra("module_index", DbHelper.MODULE_SCENE_DETECT);
                 break;
             case R.id.rl_home_label_detect:
                 intent.setClass(this, MainActivity.class);
+                intent.putExtra("module_index", DbHelper.MODULE_LABEL_DETECT);
                 break;
             case R.id.ll_home_object_detect:
-                intent.setClass(this, MainActivity.class);
+                intent.setClass(this, TFDetectActivity.class);
                 break;
             case R.id.ll_home_mnist_detect:
-                intent.setClass(this, MainActivity.class);
+                intent.setClass(this, MnistDetectActivity.class);
                 break;
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

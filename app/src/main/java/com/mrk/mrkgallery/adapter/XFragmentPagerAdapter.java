@@ -11,10 +11,10 @@ import java.util.List;
 public class XFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList;
 
-    public XFragmentPagerAdapter(FragmentManager fm) {
+    public XFragmentPagerAdapter(FragmentManager fm, int moduleIndex) {
         super(fm);
 
-        mFragmentList = FragmentGenerator.getFragmentList();
+        mFragmentList = FragmentGenerator.getFragmentList(moduleIndex);
     }
 
     @Override
