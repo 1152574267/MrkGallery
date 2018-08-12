@@ -54,7 +54,7 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
                 holder.tv_category.setText("category: " + item.getPhotoCategory());
                 holder.tv_type.setText("labelContent: " + item.getPhotoLabel());
             } else if (mModuleIndex == DbHelper.MODULE_TF_DETECT) {
-                holder.tv_category.setText("tfType: " + item.getPhotoCategory());
+                holder.tv_category.setText("objectType: " + item.getPhotoCategory());
                 holder.tv_type.setText(" ");
             } else if (mModuleIndex == DbHelper.MODULE_MNIST_DETECT) {
                 holder.tv_category.setText("mnistType: " + item.getPhotoCategory());
