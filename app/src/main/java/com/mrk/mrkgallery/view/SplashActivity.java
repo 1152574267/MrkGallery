@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.util.PermissionUtil;
 
@@ -32,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             checkExternalStorage();
         } else {
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, HomePageActivity.class));
             finish();
         }
     }
@@ -50,7 +49,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
 
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, HomePageActivity.class));
         finish();
     }
 
@@ -104,7 +103,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
 
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, HomePageActivity.class));
         finish();
     }
     /*********************************************************/
