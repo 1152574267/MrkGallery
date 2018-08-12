@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_home_strategy"
+            android:layout_width="149dp"
+            android:layout_height="139dp"
+            android:background="@drawable/bg_normal_home_logo_selector"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/narmal_home_strategy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:text="策略"
+                android:textColor="#212121"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/normal_decrate" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_home_ie"
+            android:layout_width="149dp"
+            android:layout_height="139dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/bg_normal_home_logo_selector"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/narmal_home_ie" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:text="安全浏览器"
+                android:textColor="#212121"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/normal_decrate" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_home_msg"
+            android:layout_width="149dp"
+            android:layout_height="139dp"
+            android:background="@drawable/bg_normal_home_logo_selector">
+
+            <ImageView
+                android:id="@+id/iv_msg"
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/narmal_home_msg" />
+
+            <TextView
+                android:id="@+id/tv_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_msg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="11dp"
+                android:text="消息"
+                android:textColor="#212121"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/msg_red_point"
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:layout_marginTop="98dp"
+                android:layout_toRightOf="@id/tv_msg"
+                android:src="@drawable/normal_home_red" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="1dp"
+                android:layout_below="@id/tv_msg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/normal_decrate" />
+
+            <TextView
+                android:id="@+id/tv_item_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="45dp"
+                android:text="5"
+                android:textColor="#9e65c6"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_home_clean"
+            android:layout_width="149dp"
+            android:layout_height="139dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/bg_normal_home_logo_selector"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/narmal_home_clean" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:text="手机清理"
+                android:textColor="#212121"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/normal_decrate" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
+
+
+
