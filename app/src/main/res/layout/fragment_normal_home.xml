@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_splash"
     android:gravity="center"
     android:orientation="horizontal">
 
@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ll_home_strategy"
+            android:id="@+id/ll_home_scene_detect"
             android:layout_width="149dp"
             android:layout_height="139dp"
             android:background="@drawable/bg_normal_home_logo_selector"
@@ -23,13 +23,13 @@
                 android:layout_width="67dp"
                 android:layout_height="67dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/narmal_home_strategy" />
+                android:src="@drawable/icon_app" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                android:text="策略"
+                android:text="@string/tv_image_scene_detect"
                 android:textColor="#212121"
                 android:textSize="14sp" />
 
@@ -41,7 +41,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_home_ie"
+            android:id="@+id/ll_home_object_detect"
             android:layout_width="149dp"
             android:layout_height="139dp"
             android:layout_marginTop="11dp"
@@ -53,13 +53,13 @@
                 android:layout_width="67dp"
                 android:layout_height="67dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/narmal_home_ie" />
+                android:src="@drawable/img_tab_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                android:text="安全浏览器"
+                android:text="@string/tv_image_object_detect"
                 android:textColor="#212121"
                 android:textSize="14sp" />
 
@@ -69,8 +69,6 @@
                 android:layout_marginTop="7dp"
                 android:src="@drawable/normal_decrate" />
         </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -80,37 +78,29 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_home_msg"
+            android:id="@+id/rl_home_label_detect"
             android:layout_width="149dp"
             android:layout_height="139dp"
             android:background="@drawable/bg_normal_home_logo_selector">
 
             <ImageView
-                android:id="@+id/iv_msg"
+                android:id="@+id/iv_label_detect"
                 android:layout_width="67dp"
                 android:layout_height="67dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/narmal_home_msg" />
+                android:src="@drawable/img_tab_icon" />
 
             <TextView
                 android:id="@+id/tv_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_msg"
+                android:layout_below="@id/iv_label_detect"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="11dp"
-                android:text="消息"
+                android:text="@string/tv_image_label_detect"
                 android:textColor="#212121"
                 android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/msg_red_point"
-                android:layout_width="7dp"
-                android:layout_height="7dp"
-                android:layout_marginTop="98dp"
-                android:layout_toRightOf="@id/tv_msg"
-                android:src="@drawable/normal_home_red" />
 
             <ImageView
                 android:layout_width="24dp"
@@ -119,20 +109,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="7dp"
                 android:src="@drawable/normal_decrate" />
-
-            <TextView
-                android:id="@+id/tv_item_tips"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="45dp"
-                android:text="5"
-                android:textColor="#9e65c6"
-                android:textSize="10sp" />
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/ll_home_clean"
+            android:id="@+id/ll_home_mnist_detect"
             android:layout_width="149dp"
             android:layout_height="139dp"
             android:layout_marginTop="11dp"
@@ -144,13 +124,13 @@
                 android:layout_width="67dp"
                 android:layout_height="67dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/narmal_home_clean" />
+                android:src="@drawable/icon_app" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                android:text="手机清理"
+                android:text="@string/tv_image_mnist_detect"
                 android:textColor="#212121"
                 android:textSize="14sp" />
 
@@ -160,10 +140,6 @@
                 android:layout_marginTop="7dp"
                 android:src="@drawable/normal_decrate" />
         </LinearLayout>
-
-
     </LinearLayout>
+
 </LinearLayout>
-
-
-

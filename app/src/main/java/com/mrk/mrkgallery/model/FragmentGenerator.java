@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentGenerator {
-    public static int[] strArr = new int[]{R.string.tv_image_scene_detect, R.string.tv_image_label_detect, R.string.tv_image_tf_detect, R.string.tv_image_tf_detect};
+    public static int[] strArr = new int[]{R.string.tv_image_scene_detect, R.string.tv_image_label_detect, R.string.tv_image_object_detect, R.string.tv_image_mnist_detect};
     public static int[] drawableArr = new int[]{R.drawable.img_tab_icon, R.drawable.img_tab_icon, R.drawable.img_tab_icon, R.drawable.img_tab_icon};
 
     public static List<Fragment> getFragmentList() {
