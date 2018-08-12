@@ -52,7 +52,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 intent.putExtra("module_index", DbHelper.MODULE_LABEL_DETECT);
                 break;
             case R.id.ll_home_object_detect:
-                intent.setClass(this, TFDetectActivity.class);
+                intent.setClass(this, ObjectDetectActivity.class);
                 break;
             case R.id.ll_home_mnist_detect:
                 intent.setClass(this, MnistDetectActivity.class);

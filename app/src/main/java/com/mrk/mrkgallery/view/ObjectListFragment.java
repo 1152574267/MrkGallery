@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.XRecyclerViewAdapter;
@@ -21,9 +20,9 @@ import com.mrk.mrkgallery.decoration.MyDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TFListFragment extends Fragment
+public class ObjectListFragment extends Fragment
         implements XRecyclerViewAdapter.OnItemClickListener, XRecyclerViewAdapter.OnItemLongClickListener {
-    private static final String TAG = TFListFragment.class.getSimpleName();
+    private static final String TAG = ObjectListFragment.class.getSimpleName();
 
     private Context mContext;
     private RecyclerView mRecyclerView;
@@ -110,7 +109,7 @@ public class TFListFragment extends Fragment
     public void onItemClick(int position) {
 //        Toast.makeText(mContext, "onItemClick: " + position, Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(getActivity(), TFDetectActivity.class);
+        Intent intent = new Intent(getActivity(), ObjectDetectActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(intent);
     }

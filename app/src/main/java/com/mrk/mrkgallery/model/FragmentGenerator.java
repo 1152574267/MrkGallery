@@ -5,9 +5,7 @@ import android.support.v4.app.Fragment;
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.util.DbHelper;
 import com.mrk.mrkgallery.view.LabelListFragment;
-import com.mrk.mrkgallery.view.MnistListFragment;
 import com.mrk.mrkgallery.view.SceneListFragment;
-import com.mrk.mrkgallery.view.TFListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

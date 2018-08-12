@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
@@ -30,9 +29,9 @@ import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
-public class TFDetectActivity extends AppCompatActivity implements
+public class ObjectDetectActivity extends AppCompatActivity implements
         MRecyclerViewAdapter.OnItemClickListener, MRecyclerViewAdapter.OnItemLongClickListener {
-    private static final String TAG = TFDetectActivity.class.getSimpleName();
+    private static final String TAG = ObjectDetectActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private MRecyclerViewAdapter<PhotoItem> mAdapter;
@@ -129,7 +128,7 @@ public class TFDetectActivity extends AppCompatActivity implements
 
             @Override
             public void subscribe(@NonNull FlowableEmitter<PhotoItem> emitter) throws Exception {
-                List<PhotoItem> photoItems = DbHelper.getPhotoList(TFDetectActivity.this);
+                List<PhotoItem> photoItems = DbHelper.getPhotoList(ObjectDetectActivity.this);
                 Log.d(TAG, "subscribe: " + photoItems.size());
 
                 for (int i = 0; i < photoItems.size(); i++) {

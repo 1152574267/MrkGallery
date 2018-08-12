@@ -24,7 +24,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".view.SceneDetectActivity" />
         <activity android:name=".view.LabelDetectActivity" />
-        <activity android:name=".view.TFDetectActivity" />
+        <activity android:name=".view.ObjectDetectActivity" />
         <activity android:name=".view.MnistDetectActivity" />
 
         <provider
