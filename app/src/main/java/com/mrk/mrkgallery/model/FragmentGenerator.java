@@ -3,7 +3,7 @@ package com.mrk.mrkgallery.model;
 import android.support.v4.app.Fragment;
 
 import com.mrk.mrkgallery.R;
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.TfAIUtil;
 import com.mrk.mrkgallery.view.LabelListFragment;
 import com.mrk.mrkgallery.view.SceneListFragment;
 
@@ -17,9 +17,9 @@ public class FragmentGenerator {
     public static List<Fragment> getFragmentList(int moduleIndex) {
         List<Fragment> fragmentList = new ArrayList<Fragment>();
 
-        if (moduleIndex == DbHelper.MODULE_SCENE_DETECT) {
+        if (moduleIndex == TfAIUtil.MODULE_SCENE_DETECT) {
             fragmentList.add(new SceneListFragment());
-        } else if (moduleIndex == DbHelper.MODULE_LABEL_DETECT) {
+        } else if (moduleIndex == TfAIUtil.MODULE_LABEL_DETECT) {
             fragmentList.add(new LabelListFragment());
         }
 

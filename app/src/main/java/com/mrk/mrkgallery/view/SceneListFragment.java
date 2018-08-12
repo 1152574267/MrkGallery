@@ -17,7 +17,7 @@ import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.XRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.FileItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.HiAIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class SceneListFragment extends Fragment
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        DbHelper.initSceneContents();
+        HiAIUtil.initSceneContents();
     }
 
     @Nullable
@@ -74,9 +74,9 @@ public class SceneListFragment extends Fragment
 
         List<FileItem> mFileList = new ArrayList<FileItem>();
         mFileList.clear();
-        for (int i = 0; i < DbHelper.SCENE_CONTENTS.size(); i++) {
+        for (int i = 0; i < HiAIUtil.SCENE_CONTENTS.size(); i++) {
             FileItem item = new FileItem();
-            item.setFileName(DbHelper.SCENE_CONTENTS.get(i));
+            item.setFileName(HiAIUtil.SCENE_CONTENTS.get(i));
             mFileList.add(item);
         }
         mAdapter = new XRecyclerViewAdapter<FileItem>(mContext, mFileList);

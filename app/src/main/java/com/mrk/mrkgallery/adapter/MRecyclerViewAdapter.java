@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.mrk.mrkgallery.R;
 import com.bumptech.glide.Glide;
 import com.mrk.mrkgallery.bean.PhotoItem;
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.TfAIUtil;
 
 import java.util.List;
 
@@ -47,16 +47,16 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
         if (object instanceof PhotoItem) {
             PhotoItem item = (PhotoItem) object;
             holder.tv_name.setText("name: " + item.getPhotoName());
-            if (mModuleIndex == DbHelper.MODULE_SCENE_DETECT) {
+            if (mModuleIndex == TfAIUtil.MODULE_SCENE_DETECT) {
                 holder.tv_category.setText("sceneType: " + item.getPhotoCategory());
                 holder.tv_type.setText(" ");
-            } else if (mModuleIndex == DbHelper.MODULE_LABEL_DETECT) {
+            } else if (mModuleIndex == TfAIUtil.MODULE_LABEL_DETECT) {
                 holder.tv_category.setText("category: " + item.getPhotoCategory());
                 holder.tv_type.setText("labelContent: " + item.getPhotoLabel());
-            } else if (mModuleIndex == DbHelper.MODULE_TF_DETECT) {
+            } else if (mModuleIndex == TfAIUtil.MODULE_TF_DETECT) {
                 holder.tv_category.setText("objectType: " + item.getPhotoCategory());
                 holder.tv_type.setText(" ");
-            } else if (mModuleIndex == DbHelper.MODULE_MNIST_DETECT) {
+            } else if (mModuleIndex == TfAIUtil.MODULE_MNIST_DETECT) {
                 holder.tv_category.setText("mnistType: " + item.getPhotoCategory());
                 holder.tv_type.setText(" ");
             }
@@ -67,7 +67,7 @@ public class MRecyclerViewAdapter<T> extends RecyclerView.Adapter<MRecyclerViewA
             params.width = width / 2;
             params.height = (int) (200 + Math.random() * 400);
             holder.img.setLayoutParams(params);
-            if (mModuleIndex == DbHelper.MODULE_MNIST_DETECT) {
+            if (mModuleIndex == TfAIUtil.MODULE_MNIST_DETECT) {
                 holder.img.setImageResource(item.getPhotoResId());
             } else {
                 Glide.with(mContext).load(item.getPhotoPath()).into(holder.img);

@@ -7,7 +7,7 @@ import android.graphics.Matrix;
 import android.os.Trace;
 import android.util.Log;
 
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.TfAIUtil;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
@@ -30,7 +30,7 @@ public class MnistClassifier {
     private TensorFlowInferenceInterface inferenceInterface;
 
     public MnistClassifier(AssetManager assetManager) {
-        inferenceInterface = new TensorFlowInferenceInterface(assetManager, DbHelper.MNIST_MODEL_FILE);
+        inferenceInterface = new TensorFlowInferenceInterface(assetManager, TfAIUtil.MNIST_MODEL_FILE);
     }
 
     /**

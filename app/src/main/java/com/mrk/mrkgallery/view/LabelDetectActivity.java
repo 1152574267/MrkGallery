@@ -8,14 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.huawei.hiai.vision.image.detector.LabelDetector;
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.TfAIUtil;
 import com.mrk.mrkgallery.util.HiAIUtil;
 
 import java.util.ArrayList;
@@ -90,7 +89,7 @@ public class LabelDetectActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_LABEL_DETECT);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, TfAIUtil.MODULE_LABEL_DETECT);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
@@ -133,7 +132,7 @@ public class LabelDetectActivity extends AppCompatActivity implements
 
             @Override
             public void subscribe(@NonNull FlowableEmitter<PhotoItem> emitter) throws Exception {
-                List<PhotoItem> photoItems = DbHelper.getPhotoList(LabelDetectActivity.this);
+                List<PhotoItem> photoItems = TfAIUtil.getPhotoList(LabelDetectActivity.this);
                 Log.d(TAG, "subscribe: " + photoItems.size());
 
                 for (int i = 0; i < photoItems.size(); i++) {

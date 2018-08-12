@@ -13,7 +13,7 @@ import com.huawei.hiai.vision.common.ConnectionCallback;                //加载
 import com.huawei.hiai.vision.common.VisionBase;                        //加载连接服务的静态类
 import com.mrk.mrkgallery.adapter.XFragmentPagerAdapter;
 import com.mrk.mrkgallery.model.FragmentGenerator;
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.TfAIUtil;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -59,10 +59,10 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     private void initView() {
-        moduleIndex = DbHelper.MODULE_SCENE_DETECT;
+        moduleIndex = TfAIUtil.MODULE_SCENE_DETECT;
         Intent i = getIntent();
         if (i != null) {
-            moduleIndex = i.getIntExtra("module_index", DbHelper.MODULE_SCENE_DETECT);
+            moduleIndex = i.getIntExtra("module_index", TfAIUtil.MODULE_SCENE_DETECT);
         }
 
         mTabLayout = (TabLayout) findViewById(R.id.bottom_tab_list);

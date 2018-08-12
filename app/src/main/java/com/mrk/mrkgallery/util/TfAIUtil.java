@@ -17,7 +17,7 @@ import com.mrk.mrkgallery.tfai.MnistClassifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbHelper {
+public class TfAIUtil {
     public static final int MODULE_SCENE_DETECT = 0;
     public static final int MODULE_LABEL_DETECT = 1;
     public static final int MODULE_TF_DETECT = 2;

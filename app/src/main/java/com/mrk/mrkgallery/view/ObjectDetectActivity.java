@@ -13,7 +13,7 @@ import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
 import com.mrk.mrkgallery.tfai.Classifier;
 import com.mrk.mrkgallery.tfai.TensorFlowImageClassifier;
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.TfAIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,13 +69,13 @@ public class ObjectDetectActivity extends AppCompatActivity implements
         };
 
         mClassifier = TensorFlowImageClassifier.create(getAssets(),
-                DbHelper.MODEL_FILE,
-                DbHelper.LABEL_FILE,
-                DbHelper.INPUT_SIZE,
-                DbHelper.IMAGE_MEAN,
-                DbHelper.IMAGE_STD,
-                DbHelper.INPUT_NAME,
-                DbHelper.OUTPUT_NAME);
+                TfAIUtil.MODEL_FILE,
+                TfAIUtil.LABEL_FILE,
+                TfAIUtil.INPUT_SIZE,
+                TfAIUtil.IMAGE_MEAN,
+                TfAIUtil.IMAGE_STD,
+                TfAIUtil.INPUT_NAME,
+                TfAIUtil.OUTPUT_NAME);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.tablist);
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
@@ -85,7 +85,7 @@ public class ObjectDetectActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_TF_DETECT);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, TfAIUtil.MODULE_TF_DETECT);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
@@ -128,7 +128,7 @@ public class ObjectDetectActivity extends AppCompatActivity implements
 
             @Override
             public void subscribe(@NonNull FlowableEmitter<PhotoItem> emitter) throws Exception {
-                List<PhotoItem> photoItems = DbHelper.getPhotoList(ObjectDetectActivity.this);
+                List<PhotoItem> photoItems = TfAIUtil.getPhotoList(ObjectDetectActivity.this);
                 Log.d(TAG, "subscribe: " + photoItems.size());
 
                 for (int i = 0; i < photoItems.size(); i++) {
@@ -142,7 +142,7 @@ public class ObjectDetectActivity extends AppCompatActivity implements
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** TF图像识别分类 ***********************/
-                        String tfType = DbHelper.startImageClassifier(photoItem.getPhotoPath(), mClassifier);
+                        String tfType = TfAIUtil.startImageClassifier(photoItem.getPhotoPath(), mClassifier);
                         photoItem.setPhotoCategory(tfType);
                         /********************** TF图像识别分类 ************************/
 

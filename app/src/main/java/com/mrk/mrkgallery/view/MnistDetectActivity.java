@@ -6,14 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.adapter.MRecyclerViewAdapter;
 import com.mrk.mrkgallery.bean.PhotoItem;
 import com.mrk.mrkgallery.decoration.MyDecoration;
 import com.mrk.mrkgallery.tfai.MnistClassifier;
-import com.mrk.mrkgallery.util.DbHelper;
+import com.mrk.mrkgallery.util.TfAIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +77,7 @@ public class MnistDetectActivity extends AppCompatActivity implements
         mRecyclerView.addItemDecoration(new MyDecoration(this, MyDecoration.HORIZONTAL_LIST));
 
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
-        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, DbHelper.MODULE_MNIST_DETECT);
+        mAdapter = new MRecyclerViewAdapter<PhotoItem>(this, photoList, TfAIUtil.MODULE_MNIST_DETECT);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnItemLongClickListener(this);
@@ -121,7 +120,7 @@ public class MnistDetectActivity extends AppCompatActivity implements
 
             @Override
             public void subscribe(@NonNull FlowableEmitter<PhotoItem> emitter) throws Exception {
-                List<PhotoItem> photoItems = DbHelper.getMnistPhotoList();
+                List<PhotoItem> photoItems = TfAIUtil.getMnistPhotoList();
                 Log.d(TAG, "subscribe: " + photoItems.size());
 
                 for (int i = 0; i < photoItems.size(); i++) {
@@ -134,7 +133,7 @@ public class MnistDetectActivity extends AppCompatActivity implements
                     @Override
                     public PhotoItem apply(@NonNull PhotoItem photoItem) throws Exception {
                         /********************** 手写数字图像识别 ***********************/
-                        String mnistType = DbHelper.startMnistClassifier(MnistDetectActivity.this, photoItem.getPhotoResId(), mClassifier);
+                        String mnistType = TfAIUtil.startMnistClassifier(MnistDetectActivity.this, photoItem.getPhotoResId(), mClassifier);
                         photoItem.setPhotoCategory(mnistType);
                         /********************** 手写数字图像识别 ************************/
 
