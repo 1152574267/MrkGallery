@@ -15,8 +15,10 @@ limitations under the License.
 
 package com.mrk.mrkgallery.tfai;
 
+import com.mrk.mrkgallery.tfai.Classifier.Recognition;
+
 import java.util.List;
 
 public interface ResultsView {
-    public void setResults(final List<Classifier.Recognition> results);
+    public void setResults(final List<Recognition> results);
 }

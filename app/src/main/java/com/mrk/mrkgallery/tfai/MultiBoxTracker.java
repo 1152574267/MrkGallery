@@ -34,6 +34,9 @@ import java.util.List;
 import java.util.Queue;
 
 import com.mrk.mrkgallery.tfai.Classifier.Recognition;
+import com.mrk.mrkgallery.tfai.BorderedText;
+import com.mrk.mrkgallery.tfai.ImageUtils;
+import com.mrk.mrkgallery.tfai.Logger;
 
 /**
  * A tracker wrapping ObjectTracker that also handles non-max suppression and matching existing
@@ -160,15 +163,16 @@ public class MultiBoxTracker {
     }
 
     public synchronized void draw(final Canvas canvas) {
-        // TODO(andrewharp): This may not work for non-90 deg rotations.
+        final boolean rotated = sensorOrientation % 180 == 90;
         final float multiplier =
-                Math.min(canvas.getWidth() / (float) frameHeight, canvas.getHeight() / (float) frameWidth);
+                Math.min(canvas.getHeight() / (float) (rotated ? frameWidth : frameHeight),
+                        canvas.getWidth() / (float) (rotated ? frameHeight : frameWidth));
         frameToCanvasMatrix =
                 ImageUtils.getTransformationMatrix(
                         frameWidth,
                         frameHeight,
-                        (int) (multiplier * frameHeight),
-                        (int) (multiplier * frameWidth),
+                        (int) (multiplier * (rotated ? frameHeight : frameWidth)),
+                        (int) (multiplier * (rotated ? frameWidth : frameHeight)),
                         sensorOrientation,
                         false);
         for (final TrackedRecognition recognition : trackedObjects) {
@@ -197,7 +201,7 @@ public class MultiBoxTracker {
             final int w,
             final int h,
             final int rowStride,
-            final int sensorOrienation,
+            final int sensorOrientation,
             final byte[] frame,
             final long timestamp) {
         if (objectTracker == null && !initialized) {
@@ -207,7 +211,7 @@ public class MultiBoxTracker {
             objectTracker = ObjectTracker.getInstance(w, h, rowStride, true);
             frameWidth = w;
             frameHeight = h;
-            this.sensorOrientation = sensorOrienation;
+            this.sensorOrientation = sensorOrientation;
             initialized = true;
 
             if (objectTracker == null) {

@@ -52,10 +52,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.mrk.mrkgallery.R;
-import com.mrk.mrkgallery.tfai.AutoFitTextureView;
-import com.mrk.mrkgallery.tfai.Logger;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,6 +59,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
+
+import com.mrk.mrkgallery.tfai.AutoFitTextureView;
+import com.mrk.mrkgallery.tfai.Logger;
+import com.mrk.mrkgallery.R; // Explicit import needed for internal Google builds.
 
 public class CameraConnectionFragment extends Fragment {
     private static final Logger LOGGER = new Logger();
@@ -271,7 +271,7 @@ public class CameraConnectionFragment extends Fragment {
      * @param height  The minimum desired height
      * @return The optimal {@code Size}, or an arbitrary one if none were big enough
      */
-    private static Size chooseOptimalSize(final Size[] choices, final int width, final int height) {
+    protected static Size chooseOptimalSize(final Size[] choices, final int width, final int height) {
         final int minSize = Math.max(Math.min(width, height), MINIMUM_PREVIEW_SIZE);
         final Size desiredSize = new Size(width, height);
 

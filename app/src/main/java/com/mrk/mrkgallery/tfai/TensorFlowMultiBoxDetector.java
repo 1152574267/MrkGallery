@@ -35,6 +35,8 @@ import org.tensorflow.Graph;
 import org.tensorflow.Operation;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
+import com.mrk.mrkgallery.tfai.Logger;
+
 /**
  * A detector for general purpose object detection as described in Scalable Object Detection using
  * Deep Neural Networks (https://arxiv.org/abs/1312.2249).
@@ -71,11 +73,11 @@ public class TensorFlowMultiBoxDetector implements Classifier {
      * @param assetManager     The asset manager to be used to load assets.
      * @param modelFilename    The filepath of the model GraphDef protocol buffer.
      * @param locationFilename The filepath of label file for classes.
-     *                         inputSize The input size. A square image of inputSize x inputSize is assumed.
+     *                         inputSize        The input size. A square image of inputSize x inputSize is assumed.
      * @param imageMean        The assumed mean of the image values.
      * @param imageStd         The assumed std of the image values.
      * @param inputName        The label of the image input node.
-     *                         outputName The label of the output node.
+     *                         outputName       The label of the output node.
      */
     public static Classifier create(
             final AssetManager assetManager,

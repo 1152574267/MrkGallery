@@ -32,6 +32,9 @@ import java.util.Vector;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.mrk.mrkgallery.tfai.Logger;
+import com.mrk.mrkgallery.tfai.Size;
+
 /**
  * True object detector/tracker class that tracks objects across consecutive preview frames.
  * It provides a simplified Java interface to the analogous native object defined by
@@ -54,7 +57,6 @@ public class ObjectTracker {
 
     static {
         try {
-            System.loadLibrary("tensorflow_demo");
             System.loadLibrary("tensorflow_demo");
             libraryFound = true;
         } catch (UnsatisfiedLinkError e) {
