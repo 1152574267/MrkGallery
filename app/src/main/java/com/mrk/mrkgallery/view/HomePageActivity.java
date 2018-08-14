@@ -55,7 +55,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 intent.setClass(this, ObjectDetectActivity.class);
                 break;
             case R.id.ll_home_mnist_detect:
-                intent.setClass(this, StylizeActivity.class);
+                intent.setClass(this, StyleActivity.class);
                 break;
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
