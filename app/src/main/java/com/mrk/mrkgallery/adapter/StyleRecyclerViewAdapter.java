@@ -40,7 +40,7 @@ public class StyleRecyclerViewAdapter<T> extends RecyclerView.Adapter<StyleRecyc
         final T object = mDataList.get(position);
 
         PhotoItem item = (PhotoItem) object;
-        Glide.with(mContext).load(item.getPhotoPath()).into(holder.img);
+        Glide.with(mContext).load(item.getPhotoResId()).into(holder.img);
 
         final int index = position;
         if (mItemClickListener != null) {
