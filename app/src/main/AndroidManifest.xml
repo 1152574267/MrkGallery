@@ -27,6 +27,8 @@
         <activity android:name=".view.LabelDetectActivity" />
         <activity android:name=".view.ObjectDetectActivity" />
         <activity android:name=".view.MnistDetectActivity" />
+        <activity android:name=".view.CameraActivity" />
+        <activity android:name=".view.StylizeActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
