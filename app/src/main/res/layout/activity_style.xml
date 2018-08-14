@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/icon_app" />
+        android:src="@drawable/ic_launcher" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/tablist"

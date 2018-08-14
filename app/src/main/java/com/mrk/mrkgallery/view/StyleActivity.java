@@ -108,11 +108,10 @@ public class StyleActivity extends AppCompatActivity implements
 
             @Override
             public void subscribe(@NonNull FlowableEmitter<PhotoItem> emitter) throws Exception {
-                List<PhotoItem> photoItems = TfAIUtil.getPhotoList(StyleActivity.this);
-                Log.d(TAG, "subscribe: " + photoItems.size());
-
-                for (int i = 0; i < photoItems.size(); i++) {
-                    emitter.onNext(photoItems.get(i));
+                for (int i = 0; i < TfAIUtil.styleResId.length; i++) {
+                    PhotoItem item = new PhotoItem();
+                    item.setPhotoResId(TfAIUtil.styleResId[i]);
+                    emitter.onNext(item);
                 }
             }
         }, BackpressureStrategy.BUFFER)
