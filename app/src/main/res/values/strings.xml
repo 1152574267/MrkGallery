@@ -4,6 +4,4 @@
     <string name="tv_image_label_detect">图片分类标签</string>
     <string name="tv_image_object_detect">物体识别</string>
     <string name="tv_image_mnist_detect">手写数字识别</string>
-
-    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
 </resources>
