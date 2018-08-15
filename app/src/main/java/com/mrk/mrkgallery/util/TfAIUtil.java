@@ -44,19 +44,6 @@ public class TfAIUtil {
             R.drawable.num_9
     };
 
-    public static final int styleResId[] = {
-            R.drawable.style0,
-            R.drawable.style1,
-            R.drawable.style2,
-            R.drawable.style3,
-            R.drawable.style4,
-            R.drawable.style5,
-            R.drawable.style6,
-            R.drawable.style7,
-            R.drawable.style8,
-            R.drawable.style9
-    };
-
     public static List<PhotoItem> getPhotoList(Context context) {
         List<PhotoItem> photoList = new ArrayList<PhotoItem>();
         photoList.clear();
