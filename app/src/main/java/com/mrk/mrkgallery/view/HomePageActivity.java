@@ -47,11 +47,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.ll_home_scene_detect:
                 intent.setClass(this, MainActivity.class);
-                intent.putExtra("module_index", TfAIUtil.MODULE_SCENE_DETECT);
+                //intent.putExtra("module_index", TfAIUtil.MODULE_SCENE_DETECT);
                 break;
             case R.id.rl_home_label_detect:
                 intent.setClass(this, MainActivity.class);
-                intent.putExtra("module_index", TfAIUtil.MODULE_LABEL_DETECT);
+                //intent.putExtra("module_index", TfAIUtil.MODULE_LABEL_DETECT);
                 break;
             case R.id.ll_home_object_detect:
                 intent.setClass(this, ObjectDetectActivity.class);

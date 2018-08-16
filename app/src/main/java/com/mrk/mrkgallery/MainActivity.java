@@ -1,6 +1,5 @@
 package com.mrk.mrkgallery;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,7 +12,6 @@ import com.huawei.hiai.vision.common.ConnectionCallback;                //加载
 import com.huawei.hiai.vision.common.VisionBase;                        //加载连接服务的静态类
 import com.mrk.mrkgallery.adapter.XFragmentPagerAdapter;
 import com.mrk.mrkgallery.model.FragmentGenerator;
-import com.mrk.mrkgallery.util.TfAIUtil;
 
 public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -21,8 +19,6 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private FragmentPagerAdapter fpa;
-
-    private int moduleIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +55,11 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     }
 
     private void initView() {
-        moduleIndex = TfAIUtil.MODULE_SCENE_DETECT;
-        Intent i = getIntent();
-        if (i != null) {
-            moduleIndex = i.getIntExtra("module_index", TfAIUtil.MODULE_SCENE_DETECT);
-        }
-
         mTabLayout = (TabLayout) findViewById(R.id.bottom_tab_list);
         mViewPager = (ViewPager) findViewById(R.id.tab_viewpager);
 
-        fpa = new XFragmentPagerAdapter(getSupportFragmentManager(), moduleIndex);
-        mViewPager.setOffscreenPageLimit(1);
+        fpa = new XFragmentPagerAdapter(getSupportFragmentManager());
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(fpa);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.addOnTabSelectedListener(this);
@@ -78,9 +68,9 @@ public class MainActivity extends AppCompatActivity implements TabLayout.OnTabSe
     private void initData() {
         mTabLayout.removeAllTabs();
 
-//        for (int i = 0; i < 1; i++) {
-        mTabLayout.addTab(mTabLayout.newTab().setIcon(FragmentGenerator.drawableArr[moduleIndex]).setText(FragmentGenerator.strArr[moduleIndex]));
-//        }
+        for (int i = 0; i < 2; i++) {
+            mTabLayout.addTab(mTabLayout.newTab().setIcon(FragmentGenerator.drawableArr[i]).setText(FragmentGenerator.strArr[i]));
+        }
     }
 
     @Override
