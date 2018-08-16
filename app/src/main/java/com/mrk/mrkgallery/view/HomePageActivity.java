@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 
 import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
-import com.mrk.mrkgallery.util.TfAIUtil;
 
 import org.tensorflow.demo.DetectorActivity;
 
@@ -47,17 +46,15 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.ll_home_scene_detect:
                 intent.setClass(this, MainActivity.class);
-                //intent.putExtra("module_index", TfAIUtil.MODULE_SCENE_DETECT);
                 break;
             case R.id.rl_home_label_detect:
-                intent.setClass(this, MainActivity.class);
-                //intent.putExtra("module_index", TfAIUtil.MODULE_LABEL_DETECT);
+                intent.setClass(this, DetectorActivity.class);
                 break;
             case R.id.ll_home_object_detect:
                 intent.setClass(this, ObjectDetectActivity.class);
                 break;
             case R.id.ll_home_mnist_detect:
-                intent.setClass(this, DetectorActivity.class);
+                intent.setClass(this, MnistDetectActivity.class);
                 break;
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
