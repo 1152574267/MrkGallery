@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Android\\myprojects\\MrkGallery\\tfexample\\gradleBuild\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\tile.9.png",
+        "source": "D:\\Android\\myprojects\\MrkGallery\\tfexample\\gradleBuild\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\tile.9.png"
+    },
+    {
+        "merged": "D:\\Android\\myprojects\\MrkGallery\\tfexample\\gradleBuild\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_action_info.png",
+        "source": "D:\\Android\\myprojects\\MrkGallery\\tfexample\\gradleBuild\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_action_info.png"
+    },
+    {
+        "merged": "D:\\Android\\myprojects\\MrkGallery\\tfexample\\gradleBuild\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "D:\\Android\\myprojects\\MrkGallery\\tfexample\\gradleBuild\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_launcher.png"
+    }
+]
