@@ -12,6 +12,8 @@ import com.mrk.mrkgallery.MainActivity;
 import com.mrk.mrkgallery.R;
 import com.mrk.mrkgallery.util.TfAIUtil;
 
+import org.tensorflow.demo.DetectorActivity;
+
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener {
     private LinearLayout mSceneDetect;
     private RelativeLayout mLableDetect;
@@ -55,7 +57,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 intent.setClass(this, ObjectDetectActivity.class);
                 break;
             case R.id.ll_home_mnist_detect:
-                intent.setClass(this, MnistDetectActivity.class);
+                intent.setClass(this, DetectorActivity.class);
                 break;
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
