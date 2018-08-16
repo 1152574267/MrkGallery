@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="11dp"
-                android:text="@string/tv_image_scene_detect"
+                android:text="@string/tv_image_detect_classifier"
                 android:textColor="#212121"
                 android:textSize="14sp" />
 
@@ -98,7 +98,7 @@
                 android:layout_below="@id/iv_label_detect"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="11dp"
-                android:text="@string/tv_image_label_detect"
+                android:text="@string/tv_image_mb_detect"
                 android:textColor="#212121"
                 android:textSize="14sp" />
 
