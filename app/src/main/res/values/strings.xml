@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AI智能相册</string>
-    <string name="tv_image_scene_detect">场景检测</string>
-    <string name="tv_image_label_detect">图片分类标签</string>
+    <string name="tv_image_scene_detect">图像识别分类</string>
+    <string name="tv_image_label_detect">目标检测</string>
     <string name="tv_image_object_detect">物体识别</string>
     <string name="tv_image_mnist_detect">手写数字识别</string>
 </resources>
