@@ -38,21 +38,17 @@ public final class R {
         public static int debug_overlay = 0x7f0c0003;
         public static int grid_layout = 0x7f0c0004;
         public static int list_text_item = 0x7f0c0005;
-        public static int list_view = 0x7f0c0006;
-        public static int overlay = 0x7f0c0007;
-        public static int quit = 0x7f0c0008;
-        public static int results = 0x7f0c0009;
-        public static int textView = 0x7f0c000a;
-        public static int texture = 0x7f0c000b;
-        public static int tracking_overlay = 0x7f0c000c;
+        public static int overlay = 0x7f0c0006;
+        public static int results = 0x7f0c0007;
+        public static int texture = 0x7f0c0008;
+        public static int tracking_overlay = 0x7f0c0009;
     }
     public static final class layout {
         public static int activity_camera = 0x7f0f0001;
-        public static int activity_speech = 0x7f0f0002;
-        public static int camera_connection_fragment = 0x7f0f0003;
-        public static int camera_connection_fragment_stylize = 0x7f0f0004;
-        public static int camera_connection_fragment_tracking = 0x7f0f0005;
-        public static int list_text_item = 0x7f0f0006;
+        public static int camera_connection_fragment = 0x7f0f0002;
+        public static int camera_connection_fragment_stylize = 0x7f0f0003;
+        public static int camera_connection_fragment_tracking = 0x7f0f0004;
+        public static int list_text_item = 0x7f0f0005;
     }
     public static final class string {
         public static int activity_name_classification = 0x7f150001;
