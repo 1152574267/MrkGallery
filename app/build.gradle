@@ -15,15 +15,7 @@ android {
                 cppFlags "-std=c++11 -frtti -fexceptions"
             }
         }
-//        jackOptions{
-//            enabled = true
-//        }
     }
-
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
 
     buildTypes {
         release {
@@ -32,6 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
