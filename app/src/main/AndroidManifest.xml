@@ -22,6 +22,7 @@
         </activity>
 
         <activity android:name=".view.HomePageActivity" />
+        <activity android:name=".kotlin.KtHomePageActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".view.SceneDetectActivity" />
         <activity android:name=".view.LabelDetectActivity" />
