@@ -59,5 +59,4 @@ dependencies {
     implementation 'org.tensorflow:tensorflow-android:1.9.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(':tfexample')
-    implementation project(':mrkcardetect')
 }
